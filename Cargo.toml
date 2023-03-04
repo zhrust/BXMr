@@ -1,0 +1,39 @@
+[package]
+name = "bxmr"
+version = "0.1.42"
+edition = "2021"
+
+authors = ["Zoom.Quiet <zoomquiet+rs@gmail.com>"]
+
+#license = "BSD 2-Clause License"
+license-file = "LICENSE"
+description = "a CLI tool for managment BXM's code with rIME-Squirrel"
+
+readme = "README.md"
+homepage = "https://rs.101.so/dev/cli_bxmr.html"
+repository = "https://github.com/zhrust/BXMr"
+keywords = ["cli", "BXM", "rIME", "Squirrel"]
+categories = ["command-line-utilities"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# ...
+#rustflags = ["-A", "clippy::all=off"]
+[dependencies]
+log = "0.4"
+tracing = "0.1"
+clia-tracing-config = "0.2"
+#chrono = "0.4.23"
+
+#clap = "4.1.6"
+#clap-verbosity-flag = "2.0.0"
+[dependencies.clap]
+version = "4.1.6"
+features = ["derive"]
+
+[dependencies.structopt]
+    version = "0.3"
+    default-features = false
+
+[dev-dependencies]
+#assert_cmd = "2"
+#predicates = "2"
