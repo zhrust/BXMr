@@ -1,0 +1,9 @@
+[default]
+code_len = 4
+loc_toml = "log/bxm_dama_loc.toml"
+loc_yaml = "log/bxm_dama_loc.dict.yaml"
+
+[locsys]
+p2rime = "/Users/zoomq/Library/Rime"
+bxm4mac = "bxm4zq2mac.dict.yaml"
+

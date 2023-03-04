@@ -1,6 +1,9 @@
 #![allow(unused)]
-use std::collections::BTreeMap;
+use std::fs;
 use std::io::{self, Write};
+use std::collections::BTreeMap;
+
+use toml::Value;
 
 pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
 
@@ -18,6 +21,15 @@ pub fn generate_strings(length: usize,
             generate_strings(length - 1, key, gbxm);
         }
     }
+
+
+pub fn settings() -> Value{
+    let settings_str = fs::read_to_string("src/_settings.toml").unwrap();
+    let settings: Value = settings_str.parse().unwrap();
+
+    settings
+}
+
 
 pub fn init2(codelen:usize) -> Option<BTreeMap<String, Vec<String>>> {
     let mut gbxm = BTreeMap::new();

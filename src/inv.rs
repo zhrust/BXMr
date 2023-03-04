@@ -83,11 +83,13 @@ pub enum Commands {
 
     #[command(about = "path/2/[res BXM].yaml")]
     #[command(arg_required_else_help = false)]
-    Renew {
+    Renew,
+/* 
+    {
         #[arg(value_name = "YAML")]
         yaml: String,
     },
-
+ */
     #[command(external_subcommand)]
     External(Vec<OsString>),
 }
@@ -109,16 +111,22 @@ pub fn run() {
 
     match args.command {
     // not need arg.
-        Commands::Gen => gen::exp(),
-        Commands::Echo => echo::all(),
+        Commands::Gen   => gen::exp(),
+        Commands::Echo  => echo::all(),
+        Commands::Renew => renew::load(),
     // code,word
-        Commands::Upd { code, word } => upd::upd(code, word),
-        Commands::Dele { code, word } => dele::kill(code, word),
+        Commands::Upd { 
+            code, word }=> upd::upd(code, word),
+        Commands::Dele { 
+            code, word }=> dele::kill(code, word),
     // one arg
-        Commands::Init { toml } => init::init(toml),
-        Commands::Renew { yaml } => renew::load(yaml),
-        Commands::Seek { code } => seek::echo(code),
-        Commands::Find { word } => find::echo(word),
+        Commands::Init { 
+            toml }      => init::init(toml),
+//        Commands::Renew { yaml } => renew::load(yaml),
+        Commands::Seek { 
+            code }      => seek::echo(code),
+        Commands::Find { 
+            word }      => find::echo(word),
     // others
         Commands::External(args) => {
             println!("Calling out to {:?} with {:?}", &args[0], &args[1..]);
