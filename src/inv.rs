@@ -7,9 +7,11 @@ use clap::Parser;
 //use clap::{AppSettings, Parser, Subcommand};
 
 pub mod util;
-pub mod echo;
+pub mod cfg;
+pub mod env;
 
 pub mod init;
+pub mod echo;
 pub mod renew;
 pub mod gen;
 
@@ -36,12 +38,47 @@ pub struct Cli {
 #[derive(Debug, clap::Parser)]
 pub enum Commands {
 
-    #[command(about = "print all BXM code-words")]
+    #[command(about = "print all BXM define as code:words")]
     Echo,
 
-    #[command(about = "gen. rIME .yaml...")]
+    #[command(about = "yaml|toml path/2/u/loc./AIM.yaml|toml ~ set rIME aim .yaml & BXMr usage .toml as ENV AT FIRST...")]
+    #[command(arg_required_else_help = false)]
+    Cfg {
+        #[arg(value_name = "NAME")]
+        name: String,
+        #[arg(value_name = "PATH")]
+        path: String,
+    },
+
+    #[command(about = "check bind ENV setting, work with coomad:cfg")]
+    #[command(arg_required_else_help = false)]
+    Env,
+
+    #[command(about = "default -> ./log/bxm_dama_loc.toml, config by command: cfg")]
+    #[command(arg_required_else_help = false)]
+    Init ,
+
+    #[command(about = "re-generating .yaml -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg")]
     #[command(arg_required_else_help = false)]
     Gen,
+
+    #[command(about = "default -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg")]
+    #[command(arg_required_else_help = false)]
+    Renew,
+
+    #[command(about = "base code SEEK word is exist?")]
+    #[command(arg_required_else_help = false)]
+    Seek {
+        #[arg(value_name = "CODE")]
+        code: String,
+    },
+
+    #[command(about = "base word FIND code is exist?")]
+    #[command(arg_required_else_help = false)]
+    Find {
+        #[arg(value_name = "WORD")]
+        word: String,
+    },
 
     #[command(about = "aaa 叒 <~ code word")]
     #[command(arg_required_else_help = false)]
@@ -60,30 +97,6 @@ pub enum Commands {
         word: String,
     },
 
-    #[command(about = "path/2/[aim BXMr manag.].toml")]
-    #[command(arg_required_else_help = false)]
-    Init {
-        #[arg(value_name = "TOML")]
-        toml: String,
-    },
-
-    #[command(about = "base code SEEK word is there?")]
-    #[command(arg_required_else_help = false)]
-    Seek {
-        #[arg(value_name = "CODE")]
-        code: String,
-    },
-
-    #[command(about = "base word FIND code is there?")]
-    #[command(arg_required_else_help = false)]
-    Find {
-        #[arg(value_name = "WORD")]
-        word: String,
-    },
-
-    #[command(about = "path/2/[res BXM].yaml")]
-    #[command(arg_required_else_help = false)]
-    Renew,
 /* 
     {
         #[arg(value_name = "YAML")]
@@ -110,18 +123,22 @@ pub fn run() {
     //log::debug!("src/inv/mod:{:?}", args);
 
     match args.command {
+    // name.path
+        Commands::Cfg {
+            name, path }=> cfg::set(name, path),
     // not need arg.
-        Commands::Gen   => gen::exp(),
-        Commands::Echo  => echo::all(),
+        Commands::Env   => env::chk(),
+
+        Commands::Init => init::init(),
         Commands::Renew => renew::load(),
+        Commands::Echo  => echo::all(),
+        Commands::Gen   => gen::exp(),
     // code,word
-        Commands::Upd { 
+        Commands::Upd {
             code, word }=> upd::upd(code, word),
         Commands::Dele { 
             code, word }=> dele::kill(code, word),
     // one arg
-        Commands::Init { 
-            toml }      => init::init(toml),
 //        Commands::Renew { yaml } => renew::load(yaml),
         Commands::Seek { 
             code }      => seek::echo(code),

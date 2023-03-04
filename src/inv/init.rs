@@ -6,17 +6,37 @@
 //use std::collections::BTreeMap;
 //use std::collections::HashSet;
 
-use toml::Value;
-use std::fs::File;
-use std::io::Write;
-//use std::collections::HashMap;
+//use toml::Value;
+//use std::fs::File;
+//use std::io::Write;
+////use std::collections::HashMap;
 use crate::inv::util;
 
 
-pub fn init(toml: String) {
-    println!("init ~> {}", toml);
-    log::debug!("init to:\n\t {}", toml);
-    let mut gbxm = util::init2(2).unwrap();
+//pub fn init(toml: String) {
+pub fn init() {
+
+
+    util::chk_denv("MY_VAR");
+    util::upd_denv("MY_VAR", "path/233/loc");
+    util::upd_denv("MY3VAR", "path/423/dir");
+    util::chk_denv("MY_VAR");
+    util::rmitem_denv("MY_VAR");
+/*
+//print_gbxm_sorted(&gbxm);
+    let key = util::ENV_YAML;
+    let path = "/path/2/u/rIME";
+
+    match util::chk_env(key) {
+        Some(val) => println!("{} is set to {}", key, val),
+        None => {
+            println!("{} is not set", key);
+            util::upd_env(key, path);
+            println!("{} is set as {}", key,path);
+        },
+    }
+
+    let mut gbxm = util::init2(util::MBCL).unwrap();
 
     util::upd("zz", "双", &mut gbxm);
     util::upd("zz", "奻", &mut gbxm);
@@ -24,14 +44,14 @@ pub fn init(toml: String) {
     let zz = gbxm.get("zz").unwrap();
     println!("zz -> {:?}", zz);
 
-    //print_gbxm_sorted(&gbxm);
 
-    // Convert BTreeMap to toml Value
+
+     // Convert BTreeMap to toml Value
     let toml_value = Value::try_from(gbxm).unwrap();
     // Write toml Value to file
     let mut file = File::create(toml).unwrap();
     file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
-
+ */
 }
 
 

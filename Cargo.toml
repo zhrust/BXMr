@@ -1,6 +1,6 @@
 [package]
 name = "bxmr"
-version = "0.1.42"
+version = "0.3.42"
 edition = "2021"
 
 authors = ["Zoom.Quiet <zoomquiet+rs@gmail.com>"]
@@ -26,9 +26,12 @@ clia-tracing-config = "0.2"
 toml = "0.7.2"
 yaml-rust = "0.4"
 
+dotenv = "0.15.0"
+itertools = "0.10.5"
+#envy = "0.4.2"
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.9"
-csv = "1.2.0"
+#csv = "1.2.0"
 #clap = "4.1.6"
 #clap-verbosity-flag = "2.0.0"
 [dependencies.clap]
