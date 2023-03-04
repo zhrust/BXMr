@@ -23,9 +23,9 @@
 
 - [x] 合理工程结构+日志
     - [x] CLI 指令识别,响应
-- [ ] init ~ 空白全量.toml
-    - [ ] 选定数据类型
-    - [ ] 转化为 TOML 写入指定文件 ~ bxmr.local.toml
+- [x] init ~ 空白全量.toml
+    - [x] 选定数据类型
+    - [x] 转化为 TOML 写入指定文件 ~ bxmr.local.toml
 - [ ] renew ~ 从 rIME 导入原有码表
     - [ ] Yaml 加载/解析
 - [ ] seek ~ 根据 code/键码找文字

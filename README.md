@@ -89,6 +89,7 @@ For more information,
 - [clap::_derive::_cookbook::git_derive - Rust](https://docs.rs/clap/latest/clap/_derive/_cookbook/git_derive/index.html)
 - [Building a CLI from scratch with Clapv3 | by Ukpai Ugochi | Medium](https://medium.com/javascript-in-plain-english/coding-wont-exist-in-5-years-this-is-why-6da748ba676c)
     - odd, can not cargo check
+- [CN1581030A - 自由形码中文输入法3.0版 - Google Patents](https://patents.google.com/patent/CN1581030A/zh)
 - ...
 
 

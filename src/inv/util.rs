@@ -2,8 +2,6 @@
 use std::collections::BTreeMap;
 use std::io::{self, Write};
 
-
-
 pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
 
 pub fn generate_strings(length: usize, 
@@ -20,6 +18,31 @@ pub fn generate_strings(length: usize,
             generate_strings(length - 1, key, gbxm);
         }
     }
+
+pub fn init2(codelen:usize) -> Option<BTreeMap<String, Vec<String>>> {
+    let mut gbxm = BTreeMap::new();
+    //util::generate_strings(4, String::new(), &mut gbxm);
+    //generate_strings(4, String::new(), &mut gbxm);
+    generate_strings(codelen, String::new(), &mut gbxm);
+    println!("gen. all BXM code as {}", gbxm.len());
+
+    Some(gbxm)
+}
+
+pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
+    if let Some(v) = gbxm.get_mut(key) {
+        if v.contains(&value.to_owned()) {
+            println!("{} already exists in {:?}", value, key);
+        } else {
+            //v.push(value.to_owned());
+            v.insert(0, value.to_owned());
+            println!("Updated {} in {:?}", value, key);
+        }
+    } else {
+        gbxm.insert(key.to_owned(), vec![value.to_owned()]);
+        println!("Added {} to {:?}", value, key);
+    }
+}
 
 pub fn print_gbxm_sorted(gbxm: &BTreeMap<String, Vec<String>>) {
     let mut sorted_keys: Vec<&String> = gbxm.keys().collect();

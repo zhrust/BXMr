@@ -3,52 +3,39 @@
 //use crate::git::OsStr;
 
 //use std::collections::HashMap;
-use std::collections::BTreeMap;
+//use std::collections::BTreeMap;
 //use std::collections::HashSet;
+
+use toml::Value;
+use std::fs::File;
+use std::io::Write;
+//use std::collections::HashMap;
+use crate::inv::util;
 
 
 pub fn init(toml: String) {
     println!("init ~> {}", toml);
     log::debug!("init to:\n\t {}", toml);
-    init2();
-}
+    let mut gbxm = util::init2(2).unwrap();
 
-//use std::collections::HashMap;
-use crate::inv::util;
-
-fn init2() -> Option<BTreeMap<String, Vec<String>>> {
-    let mut gbxm = BTreeMap::new();
-    util::generate_strings(4, String::new(), &mut gbxm);
-    println!("gen. all BXM code as {}", gbxm.len());
-
-    //print_gbxm_sorted(&gbxm);
-
-    upd("zz", "双", &mut gbxm);
-    upd("zz", "奻", &mut gbxm);
-    upd("zz", "奻", &mut gbxm);
-
+    util::upd("zz", "双", &mut gbxm);
+    util::upd("zz", "奻", &mut gbxm);
+    util::upd("zz", "奻", &mut gbxm);
     let zz = gbxm.get("zz").unwrap();
     println!("zz -> {:?}", zz);
 
     //print_gbxm_sorted(&gbxm);
 
-    Some(gbxm)
+    // Convert BTreeMap to toml Value
+    let toml_value = Value::try_from(gbxm).unwrap();
+    // Write toml Value to file
+    let mut file = File::create(toml).unwrap();
+    file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
+
 }
 
-fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
-    if let Some(v) = gbxm.get_mut(key) {
-        if v.contains(&value.to_owned()) {
-            println!("{} already exists in {:?}", value, key);
-        } else {
-            //v.push(value.to_owned());
-            v.insert(0, value.to_owned());
-            println!("Updated {} in {:?}", value, key);
-        }
-    } else {
-        gbxm.insert(key.to_owned(), vec![value.to_owned()]);
-        println!("Added {} to {:?}", value, key);
-    }
-}
+
+
 
 /*
 fn print_gbxm_sorted(gbxm: &[(String, Vec<()>)]) {

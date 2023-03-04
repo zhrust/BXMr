@@ -23,6 +23,7 @@ log = "0.4"
 tracing = "0.1"
 clia-tracing-config = "0.2"
 #chrono = "0.4.23"
+toml = "0.7.2"
 
 #clap = "4.1.6"
 #clap-verbosity-flag = "2.0.0"
@@ -30,9 +31,9 @@ clia-tracing-config = "0.2"
 version = "4.1.6"
 features = ["derive"]
 
-[dependencies.structopt]
-    version = "0.3"
-    default-features = false
+#[dependencies.structopt]
+#    version = "0.3"
+#    default-features = false
 
 [dev-dependencies]
 #assert_cmd = "2"
