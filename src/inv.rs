@@ -160,7 +160,7 @@ pub async fn run() {
         Commands::Init => init::init(),
         Commands::Renew => renew::load(),
         //Commands::Echo  => echo::all(),
-        Commands::Gen   => gen::exp(),
+        Commands::Gen   => gen::exp().await,
     // code,word
         Commands::Upd {
             code, word }=> upd::upd(code, word).await,

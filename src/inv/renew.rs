@@ -27,27 +27,17 @@ pub fn flusht(ycodes:Vec<(String, String)>) {
 
     match util::chk_denv(util::ENV_TOML) {
         util::EnvResult::Success(_ekey, _toml) => {
-            //println!("Key is OK");
-            //println!("env hold:{}={}",dkey,dval);
             //let code4btmap = util::toml2btmap(_toml);
             match util::toml2btmap(_toml.clone()) {
                 Some(mut code4btmap) => {
-                    //for (i, (k, v)) in ycodes[0..9].iter().enumerate() {
                     for (i, (k, v)) in ycodes.iter().enumerate() {
-                        //println!("{}: {}={}", i, k, v);
                         util::upd(k, v, &mut code4btmap);
                         pb.set_position((i + 1) as u64);
                         //pb.inc(1);
                     }
-            pb.finish_with_message("done");
+            pb.finish_with_message("load all Yaml data.");
 
             util::save2toml(code4btmap,_toml);
-
-            //// Convert BTreeMap to toml Value
-            //let toml_value = Value::try_from(code4btmap).unwrap();
-            //// Write toml Value to file
-            //let mut file = File::create(_toml).unwrap();
-            //file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
 
                 },
                 None => println!("Failed to parse TOML file"),

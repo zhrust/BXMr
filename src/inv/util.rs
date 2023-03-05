@@ -38,6 +38,21 @@ use tokio::fs::File as TokioFile;
 pub const ENV_YAML: &str = "BXMR_AIM_YAML";
 pub const ENV_TOML: &str = "BXMR_TEMP_TOML";
 
+pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
+pub const MBCL: usize = 4; // code len.
+
+pub const RIME_HEAD: &str = r#"
+# Rime dictionary
+# encoding: utf-8
+
+---
+name: bxm4zq2mac
+version: "v.23.03.05.1642"
+sort: original
+...
+
+"#;
+
 /*
 use std::path::Path;
 
@@ -173,9 +188,6 @@ fn load_toml(tfile:String) {
 }
 
 
-pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
-pub const MBCL: usize = 4; // code len.
-
 pub fn generate_strings(length: usize, 
             prefix: String, 
             gbxm: &mut BTreeMap<String, Vec<String>>
@@ -209,7 +221,7 @@ pub fn yaload(yfile:String) -> Vec<(String, String)> {
     //let path = Path::new(&yfile);
     //let file = File::open(path)?;
     //let reader = BufReader::new(file);
-    let lines = reader.lines().skip(10);
+    let lines = reader.lines().skip(9);
 
     let mut entries = Vec::new();
     
@@ -230,9 +242,12 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
     match gbxm.get_mut(key) {
         Some(v) => {
             match v.iter().position(|x| x == value) {
-                Some(_pos) => {
+                Some(_/* _pos */) => {
+
+                    // Do nothing
+                    {}
                     //println!("{} already exists in {:?}", value, key);
-                    log::info!("{} already exists in {:?}", value, key);
+                    //log::info!("{} already exists in {:?}", value, key);
                     //dbg!(format!("{} already exists in {:?}", value, key));
                 },
                 None => {
