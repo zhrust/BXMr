@@ -24,24 +24,125 @@ use serde::{Serialize, Deserialize};
 //use envy::Error;
 use itertools::Itertools;
 use dotenv::dotenv;
+use indicatif::ProgressBar;
+
+//use tokio::io::{self, AsyncBufReadExt};
+//use tokio::fs::File as async_File;
+//use tokio::io::{self as async_io, AsyncBufReadExt};
+//use tokio::io::{AsyncBufReadExt, BufReader};
+use tokio::io::AsyncBufReadExt;
+use tokio::io::BufReader as TokioBufReader;
+//use tokio::fs::File;
+use tokio::fs::File as TokioFile;
 
 pub const ENV_YAML: &str = "BXMR_AIM_YAML";
 pub const ENV_TOML: &str = "BXMR_TEMP_TOML";
 
+/*
+use std::path::Path;
+
+let my_path_str = "/path/to/my/file.txt";
+let my_path = Path::new(my_path_str);
+*/
+pub async fn async_read_lines<P>(path: P) -> Result<Vec<String>, io::Error>
+where
+    P: AsRef<std::path::Path>,
+{
+    let file = TokioFile::open(path).await?;
+    let reader = TokioBufReader::new(file);
+    let mut lines = vec![];
+    let mut line = String::new();
+    tokio::pin!(reader);
+    loop {
+        match reader.read_line(&mut line).await {
+            Ok(0) => {
+                break;
+            }
+            Ok(_) => {
+                lines.push(line.trim().to_string());
+                line.clear();
+            }
+            Err(e) => return Err(e),
+        }
+    }
+    Ok(lines)
+}
+
+/* 
+pub async fn speed_openf(tfile:String)-> io::Result<()> {
+    let file = TokioFile::open(tfile).await?;
+    let mut reader = TokioBufReader::new(file);
+    while let Some(line) = reader.lines().next_line().await? {
+        println!("{}", line);
+    }
+    Ok(())
+}
+ */
+
+pub async fn async_toml2btmap(tfile: String) -> Option<BTreeMap<String, Vec<String>>> {
+    println!("opening {}...", tfile);
+
+    let path = Path::new(&tfile);
+    let contents = async_read_lines(path).await.ok()?;
+
+    let joined_contents = contents.join("\n");
+    let data: toml::Value = toml::from_str(joined_contents.as_str()).ok()?;
+    let line_count = joined_contents.lines().count();
+
+    //let data: toml::Value = toml::from_str(&contents).ok()?;
+    //let line_count = contents.lines().count();
+
+    println!("reading : {} lines", line_count);
+    let pb = ProgressBar::new(line_count as u64);
+
+    let mut map = BTreeMap::new();
+
+    for (key, value) in data.as_table()? {
+        pb.inc(1);
+        if let Some(array) = value.as_array() {
+            let mut vec = Vec::new();
+            for v in array {
+                if let Some(s) = v.as_str() {
+                    vec.push(String::from(s));
+                }
+            }
+            map.insert(key.clone(), vec.clone());
+        }
+    }
+
+    Some(map)
+}
+
 
 pub fn toml2btmap(tfile:String) -> Option<BTreeMap<String, Vec<String>>> {
+    println!("openning {}...",tfile);
+
     let mut file = File::open(tfile).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
+
     let data: Value = toml::from_str(&contents).unwrap();
 
+    let line_count = contents.lines().count();
+    println!("reading : {} lines", line_count);
+    let pb = ProgressBar::new(line_count as u64);
+
     let mut map = BTreeMap::new();
+    //println!("load BXM code table {}...",tfile);
+    
     for (key, value) in data.as_table().unwrap() {
+        pb.inc(1);
         if let Some(array) = value.as_array() {
-            let vec = array.iter()
-                .filter_map(|v| v.as_str())
-                .map(String::from)
-                .collect::<Vec<String>>();
+            //let vec = array.iter()
+            //    .filter_map(|v| v.as_str())
+            //    .map(String::from)
+            //    .collect::<Vec<String>>();
+            let mut vec = Vec::new();
+            for v in array {
+                if let Some(s) = v.as_str() {
+                    vec.push(String::from(s));
+                }
+            }
             map.insert(key.clone(), vec.clone());
             //println!("insert: {}->{:#?}", key.clone(), vec.clone());
         }
@@ -51,6 +152,26 @@ pub fn toml2btmap(tfile:String) -> Option<BTreeMap<String, Vec<String>>> {
 
     Some(map)
 }
+
+
+fn load_toml(tfile:String) {
+    //let file_path = tfile;
+    let file = File::open(tfile).unwrap();
+    let reader = BufReader::new(file);
+    let lines = reader.lines().filter_map(|line| {
+        let line = line.ok()?;
+        let trimmed = line.trim();
+// clean empty and annotate...
+        if trimmed.is_empty() || trimmed.starts_with("#") {
+            None
+        } else {
+            Some(String::from(trimmed))
+        }
+    });
+    let line_count = lines.count();
+    println!("Line count: {}", line_count);
+}
+
 
 pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
 pub const MBCL: usize = 4; // code len.
@@ -127,17 +248,50 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
         }
     }
 }
+/* 
+fn del_item4list(list: Vec<String>, item: &str) -> Vec<String> {
+    let mut new_list = Vec::new(); // 创建一个新的动态数组
+
+    for string in list {
+        if string != item {
+            new_list.push(string); // 如果当前字符串不是要删除的字符串，将其添加到新的动态数组中
+        }
+    }
+
+    new_list // 返回新的动态数组
+}
+
+pub fn del_item4list(list: Vec<String>, word: &str) -> Vec<String> {
+    list
+        .into_iter()
+        .filter(|string| *string != word)
+        .collect()
+}
+
+ */
+
+pub fn del_item4list(list: &mut Vec<String>, word: &str) {
+    list.retain(|x| x != word);
+}
+
+//use std::collections::BTreeMap;
+
+pub fn replace_value(map: &mut BTreeMap<String, Vec<String>>, key: &str, new_value: Vec<String>) {
+    map.entry(key.to_string())
+        .and_modify(|value| *value = new_value.clone())
+        .or_insert(new_value);
+}
 
 
 pub fn save2toml(code4btmap:BTreeMap<String, Vec<String>>, toml:String){
-
     // Convert BTreeMap to toml Value
     let toml_value = Value::try_from(code4btmap).unwrap();
     // Write toml Value to file
-    let mut file = File::create(toml).unwrap();
+    let mut file = File::create(toml.clone()).unwrap();
     file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
-
+    println!("\n\t saved -> {}",toml.clone());
 }
+
 
 /* 
 pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
@@ -279,11 +433,11 @@ pub fn chk_denv(key: &str)-> EnvResult {
 
             match std::env::var(key) {
                 Ok(val) => {
-                    println!("\n\t got: {}={}", key, val);
+                    //println!("\n\t got: {}={}", key, val);
                     EnvResult::Success(key.to_owned(), val)
                 },
                 Err(_) => {
-                    println!("{} is not set in .env file", key);
+                    //println!("{} is not set in .env file", key);
                     EnvResult::Failure(format!("{} is not set in .env file", key))
                 }
             }

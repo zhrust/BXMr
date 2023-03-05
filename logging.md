@@ -33,7 +33,7 @@
 - [x] renew ~ 从 rIME 导入原有码表
     - [x] Yaml 加载/解析
     - [x] Yaml 数据对应写入 Toml
-- [ ] seek ~ 根据 code/键码找文字
+- [x] seek ~ 根据 code/键码找文字
 - [ ] find ~ 根据 word/文字找 code
 - [ ] upd ~ 给定 code,word 追加码表条目
 - [ ] dele ~ 给定 code,word 删除对应条目

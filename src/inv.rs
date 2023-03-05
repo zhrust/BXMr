@@ -12,7 +12,7 @@ pub mod env;
 
 //pub mod usage;
 pub mod init;
-pub mod echo;
+//pub mod echo;
 pub mod renew;
 pub mod gen;
 
@@ -60,10 +60,10 @@ pub struct Cli {
 
 #[derive(Debug, clap::Parser)]
 pub enum Commands {
-
+/* 
     #[command(about = "print all BXM define as code:words")]
     Echo,
-
+ */
     #[command(about = "yaml|toml path/2/u/loc./AIM.yaml|toml ~ set rIME aim .yaml & BXMr usage .toml as ENV AT FIRST...")]
     #[command(arg_required_else_help = false)]
     Cfg {
@@ -134,7 +134,7 @@ pub enum Commands {
     External(Vec<OsString>),
 }
 
-pub fn run() {
+pub async fn run() {
     let _guard = clia_tracing_config::build()
         .filter_level("debug") //fatal,error,warn,info,debug
         .with_ansi(true)
@@ -159,17 +159,17 @@ pub fn run() {
 
         Commands::Init => init::init(),
         Commands::Renew => renew::load(),
-        Commands::Echo  => echo::all(),
+        //Commands::Echo  => echo::all(),
         Commands::Gen   => gen::exp(),
     // code,word
         Commands::Upd {
-            code, word }=> upd::upd(code, word),
+            code, word }=> upd::upd(code, word).await,
         Commands::Dele { 
-            code, word }=> dele::kill(code, word),
+            code, word }=> dele::kill(code, word).await,
     // one arg
 //        Commands::Renew { yaml } => renew::load(yaml),
         Commands::Seek { 
-            code }      => seek::echo(code),
+            code }      => seek::echo(code).await,
         Commands::Find { 
             word }      => find::echo(word),
     // others

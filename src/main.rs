@@ -1,8 +1,8 @@
 // main.rs
 
 mod inv;
-
-fn main() {
+#[tokio::main]
+async fn main() {
     //git::cli();
-    inv::run();
+    inv::run().await;
 }
