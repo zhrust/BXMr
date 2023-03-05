@@ -1,69 +1,69 @@
 //#![allow(unused)]
 //use std::error::Error;
-use std::fs;
-//use std::fs::File;
-use std::io::BufReader;
-use std::io::BufRead;
+//use std::fs;
+use std::fs::File;
+//use std::io::{self, Write};
+use std::io::Write;
+//use std::io::BufReader;
+//use std::io::BufRead;
 //use std::io::{BufRead, BufReader};
 //use std::path::Path;
 
-//extern crate yaml_rust;
-//use yaml_rust::{Yaml, YamlLoader};
-//use serde::Deserialize;
-//use serde::Serialize;
+use toml::Value;
+use indicatif::ProgressBar;
+//use indicatif::ProgressStyle;
 
 use crate::inv::util;
 
-pub fn yaload(yfile:String) -> Vec<(String, String)> {
-    let file = fs::File::open(yfile).expect("Failed to open file");
-    let reader = BufReader::new(file);
-    //let path = Path::new(&yfile);
-    //let file = File::open(path)?;
-    //let reader = BufReader::new(file);
-    let lines = reader.lines().skip(10);
 
-    let mut entries = Vec::new();
-    
-    for line in lines {
-        let line = line.expect("Failed to read line");
-        let parts: Vec<&str> = line.split('\t').collect();
-        if parts.len() == 2 {
-            //let (code,word) = (parts[1].to_string(), parts[0].to_string());
-            entries.push((parts[1].to_string(), parts[0].to_string()));
-            println!("load:\t{}:{}",parts[1].to_string(), parts[0].to_string());
-        }
+pub fn flusht(ycodes:Vec<(String, String)>) {
+    println!("reflush .toml with .yaml as {} codes", ycodes.len());
+
+    //let ycodes = vec![("a".to_string(), "1".to_string()); 50]; // 假设有 50 个待处理项
+    let pb = ProgressBar::new(ycodes.len() as u64);
+
+    //let n = data.len();
+    //let start = if n >= 10 { n - 10 } else { 0 };
+
+    match util::chk_denv(util::ENV_TOML) {
+        util::EnvResult::Success(_ekey, _toml) => {
+            //println!("Key is OK");
+            //println!("env hold:{}={}",dkey,dval);
+            //let code4btmap = util::toml2btmap(_toml);
+            match util::toml2btmap(_toml.clone()) {
+                Some(mut code4btmap) => {
+                    //for (i, (k, v)) in ycodes[0..9].iter().enumerate() {
+                    for (i, (k, v)) in ycodes.iter().enumerate() {
+                        //println!("{}: {}={}", i, k, v);
+                        util::upd(k, v, &mut code4btmap);
+                        pb.set_position((i + 1) as u64);
+                        //pb.inc(1);
+                    }
+            pb.finish_with_message("done");
+            // Convert BTreeMap to toml Value
+            let toml_value = Value::try_from(code4btmap).unwrap();
+            // Write toml Value to file
+            let mut file = File::create(_toml).unwrap();
+            file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
+
+                },
+                None => println!("Failed to parse TOML file"),
+            }
+
+        },
+        util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
 
-    entries
 }
 
 //pub fn load(yaml: String) {
 pub fn load() {
-    println!("src/inv/renew: {}", env!("CARGO_PKG_VERSION"));
-    //log::debug!("src/inv/renew: from {}", yaml);
-
-    //let cfg = util::settings();
-    //let code_len = cfg["default"]["code_len"].as_integer().unwrap() as usize;
-    //let p2rime = cfg["locsys"]["p2rime"].as_str().unwrap().to_string();
-    //let bxm4mac = cfg["locsys"]["bxm4mac"].as_str().unwrap().to_string();
-    //println!("_settings.toml\n\t{} {}/{}",util::MBCL,p2rime,bxm4mac);
-    //// 在这里使用 code_len 和 loc_toml 进行您需要的操作
-    //log::debug!("src/inv/renew: \n\tAIM-> {}/{}", p2rime,bxm4mac);
-    ////let res = String::from_str(format!("{}/{}",p2rime,bxm4mac));
-    /* 
     match util::chk_denv(util::ENV_YAML) {
-        Ok((dkey, dval)) => {
-            println!("Key is OK");
-            println!("env hold:{}={}", dkey, dval);
-        },
-        Err(e) => print!("failed: {}", e),
-    }
- */
-    match util::chk_denv(util::ENV_YAML) {
-        util::EnvResult::Success(dkey, dval) => {
-            println!("Key is OK");
-            println!("env hold:{}={}",dkey,dval);
-            yaload(dval);
+        util::EnvResult::Success(_ekey, _yaml) => {
+            //println!("Key is OK");
+            //println!("env hold:{}={}",dkey,dval);
+            let _ycodes = util::yaload(_yaml);
+            flusht(_ycodes);
         },
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
@@ -73,20 +73,5 @@ pub fn load() {
 
 }
 
-/* 
-#[derive(Debug, Deserialize)]
-struct DictEntry {
-    key: String,
-    value: String,
-}
- */
 
 
-/* 
-fn load_dict(yfile:String) -> Vec<DictEntry> {
-    let file = File::open(yfile).unwrap();
-    let reader = BufReader::new(file);
-    let entries: Vec<DictEntry> = serde_yaml::from_reader(reader).unwrap();
-    entries
-}
- */

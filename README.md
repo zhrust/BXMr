@@ -48,6 +48,35 @@ Options:
   -V, --version  Print version
 ```
 
+> BXMr Usage:
+
+```
+0: must setup .env for all Commands;
+    $ bxmr cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
+        ~ point u rIME-Squirrel usage .yaml
+    $ bxmr cfg toml path/2/u/local/bxmr_loc_temp.toml
+        ~ point u local temporary .toml, BXMr need this for cache data
+
+> daily usage flow
+1: seek the code is exist?
+    $ bxmr seek aaa
+
+2: if not exist, u can append it:
+    $ bxmr upd aaa 叒
+
+3: or find the word's code is exist? ~> find 字词
+    or upd more code into temporary .toml
+
+4: if enough now, must export to .yaml:
+    $ bxmr gen
+
+at last, always need usage rIME's re-deploy menu, 
+    for load new code-table .yaml,
+    so we can enjoy new BXM now ;-)
+```
+
+use --help can print this mini handbook
+
 
 
 ------

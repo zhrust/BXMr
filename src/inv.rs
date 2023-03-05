@@ -10,7 +10,7 @@ pub mod util;
 pub mod cfg;
 pub mod env;
 
-pub mod usage;
+//pub mod usage;
 pub mod init;
 pub mod echo;
 pub mod renew;
@@ -84,10 +84,10 @@ pub enum Commands {
     #[command(about = "re-generating .yaml -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg")]
     #[command(arg_required_else_help = false)]
     Gen,
-
+/* 
     #[command(about = "print How to usage ~> tiny user manual...")]
     #[command(arg_required_else_help = false)]
-    Usage,
+    Usage, */
 
     #[command(about = "default -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg")]
     #[command(arg_required_else_help = false)]
@@ -155,7 +155,7 @@ pub fn run() {
             name, path }=> cfg::set(name, path),
     // not need arg.
         Commands::Env   => env::chk(),
-        Commands::Usage   => usage::echo(),
+        //Commands::Usage   => usage::echo(),
 
         Commands::Init => init::init(),
         Commands::Renew => renew::load(),
