@@ -16,13 +16,24 @@ pub async fn upd(code: String, word: String) {
         match util::async_toml2btmap(_toml.clone()).await {
             Some(mut c4btmap) => {
     // Ok ? get_mut()
-                util::upd(&code, &word, &mut c4btmap);
-
                 if let Some(word5bxm) = c4btmap.get_mut(&code) {
-                    println!("upgraded: {} -> {:?}", code, word5bxm.clone());
                     //println!("hold:{}",word5bxm.len());
+                    if word5bxm.contains(&word) {
+                        println!("hold: {} -> {:?}\n\t no need upgrade code."
+                            , code
+                            , word5bxm.clone()
+                            );
+                        
+                    }else{
+                        util::upd(&code, &word, &mut c4btmap);
+                        println!("inserted: {} -> {:?}"
+                            , code
+                            , c4btmap.get_mut(&code)
+                            );
+                        util::save2toml(c4btmap,_toml);
+
+                    }
                 } 
-                util::save2toml(c4btmap,_toml);
             },
             None => println!("Failed to parse TOML file"),
             }

@@ -43,7 +43,9 @@ pub async fn exp() {
         for key in ordered_keys {
             if let Some(values) = c4btmap.get(&key) {
                 if !values.is_empty() {
-                    for value in values {
+                    //for value in values {
+                    // 反向迭代收集
+                    for value in values.iter().rev() {
                         vec.push((value.to_owned(), key.to_owned()));
                     }
                 }

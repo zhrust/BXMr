@@ -251,8 +251,8 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
                     //dbg!(format!("{} already exists in {:?}", value, key));
                 },
                 None => {
-                    //v.push(value.to_owned());
-                    v.insert(0, value.to_owned());
+                    v.push(value.to_owned());
+                    //v.insert(0, value.to_owned()); // 插入到最前,但是, 导出 yaml 时反而在下层行
                     //println!("\n\t Updated {} in {:?} ", value, key);
                 }
             }

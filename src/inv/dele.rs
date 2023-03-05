@@ -37,12 +37,16 @@ pub async fn kill(code: String, word: String) {
                             , &code
                             , word5bxm.to_vec()
                         );
-                        println!("killed:\n\t{}->{:?}", code, _droped.clone());
+                        //println!("killed:\n\t{}->{:?}", code, _droped.clone());
+                        println!("killed:\n\t{}->{:?}"
+                            , code
+                            , c4btmap.get_mut(&code)
+                        );
+                        util::save2toml(c4btmap,_toml);
                     }
                 } else {
                     println!("\n\t LOST code -> {} ", code);
                 }
-                util::save2toml(c4btmap,_toml);
             },
             None => println!("Failed to parse TOML file"),
             }
