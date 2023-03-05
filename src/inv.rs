@@ -10,6 +10,7 @@ pub mod util;
 pub mod cfg;
 pub mod env;
 
+pub mod usage;
 pub mod init;
 pub mod echo;
 pub mod renew;
@@ -24,9 +25,31 @@ pub mod dele;
 //    , about = "A brief description of your tool"
 //    , author = "Your Name")]
 #[derive(Debug, Parser)]
-#[command(author, version, about, long_about = None)] // Read from `Cargo.toml`
-//#[clap(global_setting(AppSettings::PropagateVersion))]
-//#[clap(global_setting(AppSettings::UseLongFormatForHelpSubcommand))]
+#[command(author, version, about, 
+    long_about = r#"BXMr Usage:
+0: must setup .env for all Commands;
+    $ bxmr cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
+        ~ point u rIME-Squirrel usage .yaml
+    $ bxmr cfg toml path/2/u/local/bxmr_loc_temp.toml
+        ~ point u local temporary .toml, BXMr need this for cache data
+
+> daily usage flow
+1: seek the code is exist?
+    $ bxmr seek aaa
+
+2: if not exist, u can append it:
+    $ bxmr upd aaa 叒
+
+3: or find the word's code is exist? ~> find 字词
+    or upd more code into temporary .toml
+
+4: if enough now, must export to .yaml:
+    $ bxmr gen
+
+at last, always need usage rIME's re-deploy menu, 
+    for load new code-table .yaml,
+    so we can enjoy new BXM now ;-)
+    "#)] // Read from `Cargo.toml`
 pub struct Cli {
     //#[clap(flatten)]
     //verbose: clap_verbosity_flag::Verbosity,
@@ -61,6 +84,10 @@ pub enum Commands {
     #[command(about = "re-generating .yaml -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg")]
     #[command(arg_required_else_help = false)]
     Gen,
+
+    #[command(about = "print How to usage ~> tiny user manual...")]
+    #[command(arg_required_else_help = false)]
+    Usage,
 
     #[command(about = "default -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg")]
     #[command(arg_required_else_help = false)]
@@ -128,6 +155,7 @@ pub fn run() {
             name, path }=> cfg::set(name, path),
     // not need arg.
         Commands::Env   => env::chk(),
+        Commands::Usage   => usage::echo(),
 
         Commands::Init => init::init(),
         Commands::Renew => renew::load(),
