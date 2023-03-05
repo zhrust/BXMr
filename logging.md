@@ -26,19 +26,20 @@
 - [x] init ~ 空白全量.toml
     - [x] 选定数据类型
     - [x] 转化为 TOML 写入指定文件 ~ bxmr.local.toml
-- [ ] .env 来缓存所有关键配置
+- [x] .env 来缓存所有关键配置
     - [x] 合理创建
     - [x] 增删改查
-    - [ ] 替代原有 src/_settings.toml
+    - [x] 替代原有 src/_settings.toml
 - [ ] renew ~ 从 rIME 导入原有码表
     - [ ] Yaml 加载/解析
+    - [ ] Yaml 数据对应写入 Toml
 - [ ] seek ~ 根据 code/键码找文字
 - [ ] find ~ 根据 word/文字找 code
 - [ ] upd ~ 给定 code,word 追加码表条目
 - [ ] dele ~ 给定 code,word 删除对应条目
 - [ ] gen ~ 从 .toml -> .yaml 以供 rIME 编译加载
-    - [ ] 本地 log ?
-    - [ ] 真实目标 rIME 目录
+    - [x] 本地? -> cfg 指令配置到 .env 中保存
+    - [ ] 真实目标 rIME 目录, 检验编译
 
 
 ## refer.
