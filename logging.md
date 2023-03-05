@@ -30,9 +30,9 @@
     - [x] 合理创建
     - [x] 增删改查
     - [x] 替代原有 src/_settings.toml
-- [ ] renew ~ 从 rIME 导入原有码表
-    - [ ] Yaml 加载/解析
-    - [ ] Yaml 数据对应写入 Toml
+- [x] renew ~ 从 rIME 导入原有码表
+    - [x] Yaml 加载/解析
+    - [x] Yaml 数据对应写入 Toml
 - [ ] seek ~ 根据 code/键码找文字
 - [ ] find ~ 根据 word/文字找 code
 - [ ] upd ~ 给定 code,word 追加码表条目
@@ -40,7 +40,10 @@
 - [ ] gen ~ 从 .toml -> .yaml 以供 rIME 编译加载
     - [x] 本地? -> cfg 指令配置到 .env 中保存
     - [ ] 真实目标 rIME 目录, 检验编译
-
+- [ ] 使用 SQLite3 来替代 .toml 加速
+    - [ ] 设计 SQLite 数据库表
+    - [ ] 从 .toml 加载回原有 码表数据
+    - [ ] 替换原有 .toml 加载/回写行为
 
 ## refer.
 
@@ -48,6 +51,12 @@
     - 简化官方示例,完成结构性探索
 - [Building a CLI from scratch with Clapv3 | by Ukpai Ugochi | Medium](https://medium.com/javascript-in-plain-english/coding-wont-exist-in-5-years-this-is-why-6da748ba676c)
     - 很囧的案例, 看起来很美却根本编译不过...
+- [Interacting with databases in Rust using Diesel vs. SQLx - LogRocket Blog](https://blog.logrocket.com/interacting-databases-rust-diesel-vs-sqlx/)
+    - [Which one to use postgres vs. sqlx - The Rust Programming Language Forum](https://users.rust-lang.org/t/which-one-to-use-postgres-vs-sqlx/63680)
+    - [diesel-rs/metrics](https://github.com/diesel-rs/metrics/) ~while sqlx seems to be about 2 times slower according to our benchmarks ...
+    - [diesel vs sqlx - compare differences and reviews? | LibHunt](https://diesel.rs/)
+    - [Compare with Diesel | SeaORM 🐚 An async & dynamic ORM for Rust](https://www.sea-ql.org/SeaORM/docs/internal-design/diesel/)
+    - ...
 - ...
 
 ## logging

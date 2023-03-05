@@ -1,15 +1,15 @@
 //#![allow(unused)]
 //use std::error::Error;
 //use std::fs;
-use std::fs::File;
+//use std::fs::File;
 //use std::io::{self, Write};
-use std::io::Write;
+//use std::io::Write;
 //use std::io::BufReader;
 //use std::io::BufRead;
 //use std::io::{BufRead, BufReader};
 //use std::path::Path;
 
-use toml::Value;
+//use toml::Value;
 use indicatif::ProgressBar;
 //use indicatif::ProgressStyle;
 
@@ -40,11 +40,14 @@ pub fn flusht(ycodes:Vec<(String, String)>) {
                         //pb.inc(1);
                     }
             pb.finish_with_message("done");
-            // Convert BTreeMap to toml Value
-            let toml_value = Value::try_from(code4btmap).unwrap();
-            // Write toml Value to file
-            let mut file = File::create(_toml).unwrap();
-            file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
+
+            util::save2toml(code4btmap,_toml);
+
+            //// Convert BTreeMap to toml Value
+            //let toml_value = Value::try_from(code4btmap).unwrap();
+            //// Write toml Value to file
+            //let mut file = File::create(_toml).unwrap();
+            //file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
 
                 },
                 None => println!("Failed to parse TOML file"),

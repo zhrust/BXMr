@@ -14,17 +14,46 @@ use std::path::Path;
 
 use std::collections::BTreeMap;
 
-use toml::Value;
+//use toml::de::{Deserializer, MapAccess, SeqAccess};
+//use toml::de::{Deserializer, value::MapDeserializer, value::SeqDeserializer};
+//use toml::Value;
+use toml::value::{Value, Table};
+//use toml::de::{Deserializer, MapAccess, SeqAccess, value::TableDeserializer, value::ArrayDeserializer};
+
 use serde::{Serialize, Deserialize};
 //use envy::Error;
 use itertools::Itertools;
 use dotenv::dotenv;
 
-pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
-pub const MBCL: usize = 4; // code len.
-
 pub const ENV_YAML: &str = "BXMR_AIM_YAML";
 pub const ENV_TOML: &str = "BXMR_TEMP_TOML";
+
+
+pub fn toml2btmap(tfile:String) -> Option<BTreeMap<String, Vec<String>>> {
+    let mut file = File::open(tfile).unwrap();
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+    let data: Value = toml::from_str(&contents).unwrap();
+
+    let mut map = BTreeMap::new();
+    for (key, value) in data.as_table().unwrap() {
+        if let Some(array) = value.as_array() {
+            let vec = array.iter()
+                .filter_map(|v| v.as_str())
+                .map(String::from)
+                .collect::<Vec<String>>();
+            map.insert(key.clone(), vec.clone());
+            //println!("insert: {}->{:#?}", key.clone(), vec.clone());
+        }
+    }
+
+    //println!("{:#?}", map);
+
+    Some(map)
+}
+
+pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
+pub const MBCL: usize = 4; // code len.
 
 pub fn generate_strings(length: usize, 
             prefix: String, 
@@ -40,6 +69,7 @@ pub fn generate_strings(length: usize,
             generate_strings(length - 1, key, gbxm);
         }
     }
+
 
 pub fn init2(codelen:usize) -> Option<BTreeMap<String, Vec<String>>> {
     let mut gbxm = BTreeMap::new();
@@ -75,33 +105,47 @@ pub fn yaload(yfile:String) -> Vec<(String, String)> {
     entries
 }
 
-pub fn toml2btmap(tfile:String) -> Option<BTreeMap<String, Vec<String>>> {
-    let mut file = File::open(tfile).unwrap();
-    let mut contents = String::new();
-    file.read_to_string(&mut contents).unwrap();
-    let data: Value = toml::from_str(&contents).unwrap();
-
-    let mut map = BTreeMap::new();
-    for (key, value) in data.as_table().unwrap() {
-        if let Some(array) = value.as_array() {
-            let vec = array.iter()
-                .filter_map(|v| v.as_str())
-                .map(String::from)
-                .collect::<Vec<String>>();
-            map.insert(key.clone(), vec.clone());
-            //println!("insert: {}->{:#?}", key.clone(), vec.clone());
+pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
+    match gbxm.get_mut(key) {
+        Some(v) => {
+            match v.iter().position(|x| x == value) {
+                Some(_pos) => {
+                    //println!("{} already exists in {:?}", value, key);
+                    log::info!("{} already exists in {:?}", value, key);
+                    //dbg!(format!("{} already exists in {:?}", value, key));
+                },
+                None => {
+                    //v.push(value.to_owned());
+                    v.insert(0, value.to_owned());
+                    //println!("\n\t Updated {} in {:?} ", value, key);
+                }
+            }
+        },
+        None => {
+            gbxm.insert(key.to_owned(), vec![value.to_owned()]);
+            //println!("\n\t Added {} to {:?} ", value, key);
         }
     }
-
-    //println!("{:#?}", map);
-
-    Some(map)
 }
 
+
+pub fn save2toml(code4btmap:BTreeMap<String, Vec<String>>, toml:String){
+
+    // Convert BTreeMap to toml Value
+    let toml_value = Value::try_from(code4btmap).unwrap();
+    // Write toml Value to file
+    let mut file = File::create(toml).unwrap();
+    file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
+
+}
+
+/* 
 pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
     if let Some(v) = gbxm.get_mut(key) {
         if v.contains(&value.to_owned()) {
-            println!("{} already exists in {:?}", value, key);
+            //println!("{} already exists in {:?}", value, key);
+            log::info!("{} already exists in {:?}", value, key);
+            //dbg!(format!("{} already exists in {:?}", value, key));
         } else {
             //v.push(value.to_owned());
             v.insert(0, value.to_owned());
@@ -112,7 +156,7 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
         //println!("\n\t Added {} to {:?} ", value, key);
     }
 }
-
+ */
 pub fn print_gbxm_sorted(gbxm: &BTreeMap<String, Vec<String>>) {
     let mut sorted_keys: Vec<&String> = gbxm.keys().collect();
     sorted_keys.sort();
