@@ -1,20 +1,5 @@
 use crate::inv::util;
 
-/* 
-pub fn kill(code: String, word: String) {
-    println!("src/inv/dele: {}", env!("CARGO_PKG_VERSION"));
-    log::debug!("src/inv/dele: kill()\n\t {} \n\t{}", code, word);
-    todo!("TODO: implement function");
-}
-use std::collections::BTreeMap;
-
-fn replace_value(map: &mut BTreeMap<String, Vec<String>>, key: &str, new_value: Vec<String>) {
-    map.entry(key.to_string())
-        .and_modify(|value| *value = new_value.clone())
-        .or_insert(new_value);
-}
-*/
-
 pub async fn kill(code: String, word: String) {
 // check .env is OK?
     match util::chk_denv(util::ENV_TOML) {
@@ -31,13 +16,10 @@ pub async fn kill(code: String, word: String) {
                     }else{
                         println!("already:\n\t{}->{:?}", code, word5bxm.clone());
                         let _droped = word5bxm.retain(|x| x != &word);
-                        //util::del_item4list(word5bxm.to_vec(), &word);
-                        //println!("hold:{}",word5bxm.len());
                         util::replace_value(&mut c4btmap
                             , &code
                             , word5bxm.to_vec()
                         );
-                        //println!("killed:\n\t{}->{:?}", code, _droped.clone());
                         println!("killed:\n\t{}->{:?}"
                             , code
                             , c4btmap.get_mut(&code)

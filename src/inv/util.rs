@@ -290,13 +290,11 @@ pub fn del_item4list(list: &mut Vec<String>, word: &str) {
 }
 
 //use std::collections::BTreeMap;
-
 pub fn replace_value(map: &mut BTreeMap<String, Vec<String>>, key: &str, new_value: Vec<String>) {
     map.entry(key.to_string())
         .and_modify(|value| *value = new_value.clone())
         .or_insert(new_value);
 }
-
 
 pub fn save2toml(code4btmap:BTreeMap<String, Vec<String>>, toml:String){
     // Convert BTreeMap to toml Value

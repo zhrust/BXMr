@@ -34,13 +34,14 @@
     - [x] Yaml 加载/解析
     - [x] Yaml 数据对应写入 Toml
 - [x] seek ~ 根据 code/键码找文字
-- [ ] find ~ 根据 word/文字找 code
-- [ ] upd ~ 给定 code,word 追加码表条目
-- [ ] dele ~ 给定 code,word 删除对应条目
-- [ ] gen ~ 从 .toml -> .yaml 以供 rIME 编译加载
+- [x] find ~ 根据 word/文字找 code
+- [x] upd ~ 给定 code,word 追加码表条目
+- [x] dele ~ 给定 code,word 删除对应条目
+- [x] gen ~ 从 .toml -> .yaml 以供 rIME 编译加载
     - [x] 本地? -> cfg 指令配置到 .env 中保存
-    - [ ] 真实目标 rIME 目录, 检验编译
-- [ ] 使用 SQLite3 来替代 .toml 加速
+    - [x] 真实目标 rIME 目录, 检验编译
+- [ ] ahead ~ 给定 code,word 调整上屏推荐顺序到最前
+- [ ] ?用 SQLite3 来替代 .toml 加速
     - [ ] 设计 SQLite 数据库表
     - [ ] 从 .toml 加载回原有 码表数据
     - [ ] 替换原有 .toml 加载/回写行为

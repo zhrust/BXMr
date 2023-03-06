@@ -44,10 +44,14 @@ pub async fn exp() {
             if let Some(values) = c4btmap.get(&key) {
                 if !values.is_empty() {
                     //for value in values {
-                    // 反向迭代收集
-                    for value in values.iter().rev() {
-                        vec.push((value.to_owned(), key.to_owned()));
+                    // 从头部插入
+                    for value in values.iter() {
+                        vec.insert(0, (value.to_owned(), key.to_owned()));
                     }
+                    //// 反向迭代收集
+                    //for value in values.iter().rev() {　
+                    //    vec.push((value.to_owned(), key.to_owned()));
+                    //}
                 }
             }
         }

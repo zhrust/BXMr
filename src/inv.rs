@@ -20,6 +20,7 @@ pub mod seek;
 pub mod find;
 pub mod upd;
 pub mod dele;
+pub mod ahead;
 
 //#[command(name = "My CLI Tool"
 //    , about = "A brief description of your tool"
@@ -107,7 +108,7 @@ pub enum Commands {
         word: String,
     },
 
-    #[command(about = "aaa 叒 <~ code word")]
+    #[command(about = "aaa 叒 <~ base code word UPGRADE the define in BXM")]
     #[command(arg_required_else_help = false)]
     Upd {
         #[arg(value_name = "CODE")]
@@ -115,7 +116,7 @@ pub enum Commands {
         #[arg(value_name = "WORD")]
         word: String,
     },
-    #[command(about = "aaa 叒 <~ code word")]
+    #[command(about = "aaa 叒 ~> base code word DELET the define from BXM")]
     #[command(arg_required_else_help = false)]
     Dele {
         #[arg(value_name = "CODE")]
@@ -124,6 +125,15 @@ pub enum Commands {
         word: String,
     },
 
+
+    #[command(about = "aaa 叒 => base code word UP the word define 1st in BXM")]
+    #[command(arg_required_else_help = false)]
+    Ahead {
+        #[arg(value_name = "CODE")]
+        code: String,
+        #[arg(value_name = "WORD")]
+        word: String,
+    },
 /* 
     {
         #[arg(value_name = "YAML")]
@@ -164,6 +174,8 @@ pub async fn run() {
     // code,word
         Commands::Upd {
             code, word }=> upd::upd(code, word).await,
+        Commands::Ahead {
+            code, word }=> ahead::up1st(code, word).await,
         Commands::Dele { 
             code, word }=> dele::kill(code, word).await,
     // one arg

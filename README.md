@@ -33,14 +33,16 @@ a CLI tool for managment BXM's code with rIME-Squirrel
 Usage: bxmr <COMMAND>
 
 Commands:
-  echo   print all BXM code-words
-  gen    gen. rIME .yaml...
-  upd    aaa 叒 <~ code word
-  dele   aaa 叒 <~ code word
-  init   path/2/[aim BXMr manag.].toml
-  seek   base code SEEK word is there?
-  find   base word FIND code is there?
-  renew  path/2/[res BXM].yaml
+  cfg    yaml|toml path/2/u/loc./AIM.yaml|toml ~ set rIME aim .yaml & BXMr usage .toml as ENV AT FIRST...
+  env    check bind ENV setting, work with coomad:cfg
+  init   default -> ./log/bxm_dama_loc.toml, config by command: cfg
+  gen    re-generating .yaml -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg
+  renew  default -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg
+  seek   base code SEEK word is exist?
+  find   base word FIND code is exist?
+  upd    aaa 叒 <~ base code word UPGRADE the define in BXM
+  dele   aaa 叒 ~> base code word DELET the define from BXM
+  ahead  aaa 叒 => base code word UP the word define 1st in BXM
   help   Print this message or the help of the given subcommand(s)
 
 Options:
