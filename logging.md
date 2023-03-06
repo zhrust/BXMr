@@ -46,6 +46,30 @@
     - [ ] 从 .toml 加载回原有 码表数据
     - [ ] 替换原有 .toml 加载/回写行为
 
+### show
+> 如何动态的展示所有关键功能? 当然是操作动画了
+
+- [Terminalizer](https://www.terminalizer.com/view/4884aa0e7) ~ NODE 的败退
+- [asciinema/asciinema: Terminal session recorder 📹](https://asciinema.org/a/335480?autoplay=1) ~ Python 的, 不过将录制下来的脚本变成 gif 动画的工具已经失传了
+- [How to create a Screencast GIF. Use free existing tools on Mac OSX. | by Andreas Heissenberger | Mac O’Clock | Medium](https://medium.com/macoclock/how-to-create-a-screencast-gif-75ef6931f43c) ([How to create a Screencast GIF | Andreas Heissenberger LABORATORY](https://medium.com/p/75ef6931f43c/responses/show))
+    - ~ FFmpeg 加入, 还是标准些
+    - 先录制标准的屏幕录像
+    - 然后, 在 FFmpeg 的支持下抽帧加速变成 gif
+    - 适用所有年代所有平台所有系统...
+
+关键指令:
+
+1. Create a palette image from the video:
+
+    $ ffmpeg -y -i in.mov -vf fps=10,palettegen palette.png
+
+2. Convert into a GIF using the palette
+
+    $ ffmpeg -i in.mov -i palette.png -filter_complex “fps=10,paletteuse” out.gif
+
+
+
+
 ## refer.
 
 - [clap::_derive::_cookbook::git_derive - Rust](https://docs.rs/clap/latest/clap/_derive/_cookbook/git_derive/index.html)

@@ -2,27 +2,9 @@
 > BXM manager ~ a CLI tool for servicing code table of BXM under rIME-Squirrel
 > 叕一个 CLI 工具为 rIME-Squirrel 维护 BXM 输入法码表而创立
 
-## background
-
-- [RIME | 中州韻輸入法引擎](https://rime.im/) ~ so great IME
-- BXM [表形码](https://zh.wikipedia.org/wiki/Windows_95) ~ one great [中文输入法](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95)
-- but not tools for support BXM's code managment
+![bxmr_v0.3.43_usage](https://ipic.zoomquiet.top/2023-03-06-bxmr_v0.3.43_usage.gif)
 
 
-## goal
-> as Rustacean homework ...
-
-as crate, can:
-
-- easy install
-- usage at local
-- support rIME's input code table management:
-    - seek ~ base code check word is defined?
-    - find ~ base word check code is exist?
-    - upd ~ define new code-word and upgrade BXM-code table
-    - delet ~ base code+word remove the define date and upgrade BXM-code table
-    - gen ~ re-generating BXM-code table as .yaml, so rIME-Squirrel can re-built and reload new BXM for usage.
-    - ...
 
 ------
 ## Command-line options
@@ -109,6 +91,7 @@ For more information,
 ## logging
 
 - ...
+- 230306 ZQ ++ahead ~ adjust word suggest order
 - 230304 ZQ push github
 - 230227 ZQ mod/clap/tracing/... define
 - 230225 ZQ re-re-re-init.
@@ -122,6 +105,25 @@ For more information,
     - odd, can not cargo check
 - [CN1581030A - 自由形码中文输入法3.0版 - Google Patents](https://patents.google.com/patent/CN1581030A/zh)
 - ...
+- [RIME | 中州韻輸入法引擎](https://rime.im/) ~ so great IME
+- BXM [表形码](https://zh.wikipedia.org/wiki/Windows_95) ~ one great [中文输入法](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95)
+- but not tools for support BXM's code managment
+
+
+### goal
+> as Rustacean homework ...
+
+as crate, can:
+
+- easy install
+- usage at local
+- support rIME's input code table management:
+    - seek ~ base code check word is defined?
+    - find ~ base word check code is exist?
+    - upd ~ define new code-word and upgrade BXM-code table
+    - delet ~ base code+word remove the define date and upgrade BXM-code table
+    - gen ~ re-generating BXM-code table as .yaml, so rIME-Squirrel can re-built and reload new BXM for usage.
+    - ...
 
 
 ------
