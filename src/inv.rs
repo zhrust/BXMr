@@ -46,8 +46,8 @@ pub async fn fix(words:Vec<String>, bt4bxm:&mut BTreeMap<String, Vec<String>>) {
                     println!("{}", _util::H_MORE);
                 },
                 "gen" => {
-                    println!("Command: gen");
-                    println!("Other string: {}", words[0]);
+                    gen::exp2(bt4bxm);
+                    println!("{}", _util::H_MORE);
                 },
                 _ => {
                     // 其它情况

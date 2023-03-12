@@ -45,15 +45,15 @@
     - [x] 类似 REPL 交互, 在不退出前, 只加载一次码表到内存中
     - [ ] 迁移所有指令到对应识别中
       - [x] renew ~ 每次都使用 .yaml 在内存中重建 字典 全集,不再从 toml 加载
-      - [x] help
-      - [x] ver
-      - [x] env
-      - [x] cfg
-      - [x] seek
+      - [x] help ~ ed06f54
+      - [x] ver ~ ed06f54
+      - [x] env ~ d1bcc9f
+      - [x] cfg ~ 669b6f0
+      - [x] seek ~ 7555ae1
       - [x] find
-      - [x] upd ~ 全局使用 BTreeMap
-      - [x] dele
-      - [ ] ahead
+      - [x] upd ~ 8b28069 ++ 全局使用 BTreeMap
+      - [x] dele ~ 34847cb
+      - [x] ahead ~ c91142f
       - [ ] gen
     - [ ] 检验多次写出到 .yaml 时是否冲突
     - [ ] ...
@@ -100,9 +100,25 @@
     - ...
 - ...
 
+在 Rust 中，您可以使用内存分配器库来跟踪和监控内存使用情况。其中一些库包括:
+
+jemalloc - 这是一个通用的内存分配器，可以在许多不同的平台上使用。它提供了一些有用的功能，例如内存统计和分析。您可以在 Rust 中使用 jemallocator crate 来使用它。
+
+tcmalloc - 这是一个由 Google 开发的内存分配器，可在许多不同的平台上使用。它提供了一些高级功能，例如内存分析和调试。
+
+除此之外，您还可以使用 Rust 的标准库中的 std::mem::size_of 和 std::mem::size_of_val 函数来获取给定类型或值的大小，从而确定您的数据结构占用了多少内存。另外，Rust 标准库还提供了一些用于内存分配和释放的原语，例如 Box 和 Vec，它们可以帮助您管理内存使用情况。
+
+您还可以使用 psutil 库来获取当前进程的内存使用情况。这是一个 Python 库，可以通过 Python 的 subprocess 模块在 Rust 中调用它。
+
+需要注意的是，内存使用情况的精确度取决于您的操作系统和硬件，因此您可能需要进行一些调整来获取最准确的结果。
+
+
 ## logging
 
 - ...
+- 230312 ZQ 重构, 使用内存数据对象, 放弃 .toml 实体中间文件
+- 230307 ZQ 优化, 使用 tokio 加速文件读取
+- 230306 ZQ 发布, 可用版本
 - 230227 ZQ mod/clap/tracing/... 项目结构厘定
 - 230225 ZQ re-re-re-init.
 

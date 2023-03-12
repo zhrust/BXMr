@@ -2,8 +2,6 @@
 > BXM manager ~ a CLI tool for servicing code table of BXM under rIME-Squirrel
 > 叕一个 CLI 工具为 rIME-Squirrel 维护 BXM 输入法码表而创立
 
-![bxmr_v0.3.43_usage](https://ipic.zoomquiet.top/2023-03-06-bxmr_v0.3.43_usage.gif)
-
 
 
 ------
@@ -11,56 +9,45 @@
 
 ```
 a CLI tool for managment BXM's code with rIME-Squirrel
+BXMr Commands:
+help   Print this message or the help of the given subcommand(s)
+cfg    point where is u rIME base *.dict.yaml
+env    check bind ENV setting, work with command:cfg
+ver    echo current BXMr version info.
+gen    re-generating .yaml -> ~/Library/Rime/[U BXM].yaml,config by command: cfg
+seek   base code SEEK word is exist?
+find   base word FIND code is exist?
+upd    aaa 叒 <~ base code word UPGRADE the define in BXM
+dele   aaa 叒 ~> base code word DELET the define from BXM
+ahead  aaa 叒 => base code word UP the word define 1st in BXM
 
-Usage: bxmr <COMMAND>
-
-Commands:
-  cfg    yaml|toml path/2/u/loc./AIM.yaml|toml ~ set rIME aim .yaml & BXMr usage .toml as ENV AT FIRST...
-  env    check bind ENV setting, work with coomad:cfg
-  init   default -> ./log/bxm_dama_loc.toml, config by command: cfg
-  gen    re-generating .yaml -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg
-  renew  default -> ~/Library/Rime/[U BXM].yaml, , config by command: cfg
-  seek   base code SEEK word is exist?
-  find   base word FIND code is exist?
-  upd    aaa 叒 <~ base code word UPGRADE the define in BXM
-  dele   aaa 叒 ~> base code word DELET the define from BXM
-  ahead  aaa 叒 => base code word UP the word define 1st in BXM
-  help   Print this message or the help of the given subcommand(s)
-
-Options:
-  -h, --help     Print help
-  -V, --version  Print version
-```
-
-> BXMr Usage:
-
-```
+-----------------------------------------
+BXMr Usage:
 0: must setup .env for all Commands;
-    $ bxmr cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
+$ bxmr
+BXMr> cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
         ~ point u rIME-Squirrel usage .yaml
-    $ bxmr cfg toml path/2/u/local/bxmr_loc_temp.toml
-        ~ point u local temporary .toml, BXMr need this for cache data
-
-> daily usage flow
-1: seek the code is exist?
-    $ bxmr seek aaa
-
-2: if not exist, u can append it:
+>>> daily usage flow loop:
+$ bxmr
+BXMr> ?
+... print this help
+BXMr> seek aaa
+.. seek the code is exist?
+BXMr> upd aaa 叒
+... if not exist, u can append it:
     $ bxmr upd aaa 叒
+BXMr> find 叒
+... or find the word's code is exist? ~> find 字词
+BXMr> gen
+... if enough now, must export to .yaml:
 
-3: or find the word's code is exist? ~> find 字词
-    or upd more code into temporary .toml
+... if want exit BXMr
+BXMr> CTRL-D | CTRL-C
 
-4: if enough now, must export to .yaml:
-    $ bxmr gen
-
-at last, always need usage rIME's re-deploy menu, 
+at last, always need usage rIME's re-deploy menu,
     for load new code-table .yaml,
     so we can enjoy new BXM now ;-)
 ```
-
-use --help can print this mini handbook
-
 
 
 ------
@@ -91,6 +78,7 @@ For more information,
 ## logging
 
 - ...
+- 230312 ZQ canceled .toml, base memory speed daily updatting...
 - 230306 ZQ ++ahead ~ adjust word suggest order
 - 230304 ZQ push github
 - 230227 ZQ mod/clap/tracing/... define
