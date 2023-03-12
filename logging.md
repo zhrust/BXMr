@@ -52,7 +52,7 @@
       - [x] seek
       - [x] find
       - [x] upd ~ 全局使用 BTreeMap
-      - [ ] dele
+      - [x] dele
       - [ ] ahead
       - [ ] gen
     - [ ] 检验多次写出到 .yaml 时是否冲突

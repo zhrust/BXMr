@@ -94,13 +94,8 @@ if let Some(bt4bxm) = upd::upd2(words[1].clone()
     // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
     }
                     println!("{}", _util::H_MORE);
-
                 },
                 "dele" => {
-                    println!("Command: dele");
-                    println!("Code value: {}", words[1]);
-                    println!("Text: {}", words[2]);
-
 if let Some(bt4bxm) = dele::kill2(words[1].clone()
                         , words[2].clone()
                         , bt4bxm) {
@@ -112,9 +107,14 @@ if let Some(bt4bxm) = dele::kill2(words[1].clone()
 
                 },
                 "ahead" => {
-                    println!("Command: ahead");
-                    println!("Code value: {}", words[1]);
-                    println!("Text: {}", words[2]);
+
+if let Some(bt4bxm) = ahead::up1st2(words[1].clone()
+                        , words[2].clone()
+                        , bt4bxm) {
+    let bt4bxm = *bt4bxm;
+    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
+    }
+
                 },
                 _ => {
                     // 其它情况
