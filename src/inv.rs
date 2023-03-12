@@ -1,4 +1,4 @@
-// git.rs
+#![allow(unused)]
 //use std::ffi::OsStr;
 use std::ffi::OsString;
 //use std::path::PathBuf;
@@ -21,6 +21,63 @@ pub mod find;
 pub mod upd;
 pub mod dele;
 pub mod ahead;
+
+
+pub async fn fix(words:Vec<String>) {
+    println!("{:?}", words);
+
+    match words.len() {
+        1 => {
+            match words[0].as_str() {
+                "?" | "h" | "gen" | "renew" => {
+                    // 匹配到 ?、h、gen、renew 指令
+                    println!("Command: {}", words[0]);
+                },
+                _ => {
+                    // 其它情况
+                    println!("Unknown command: {}", words[0]);
+                }
+            }
+        },
+        2 => {
+            match words[0].as_str() {
+                "seek" => {
+                    // 匹配到 seek 指令
+                    println!("Command: seek");
+                    println!("Other string: {}", words[1]);
+                },
+                "find" => {
+                    // 匹配到 find 指令
+                    println!("Command: find");
+                    println!("Other string: {}", words[1]);
+                },
+                _ => {
+                    // 其它情况
+                    println!("Unknown command: {}", words[0]);
+                }
+            }
+        },
+        3 => {
+            match words[0].as_str() {
+                "upd" => {
+                    // 匹配到 upd 指令
+                    println!("Command: upd");
+                    println!("Code value: {}", words[1]);
+                    println!("Text: {}", words[2]);
+                },
+                _ => {
+                    // 其它情况
+                    println!("Unknown command: {}", words[0]);
+                }
+            }
+        },
+        _ => {
+            // 其它情况
+            println!("Unknown command");
+        }
+    }//match cmds.len()
+
+}
 
 //#[command(name = "My CLI Tool"
 //    , about = "A brief description of your tool"
