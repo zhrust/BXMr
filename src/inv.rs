@@ -1,5 +1,6 @@
 #![allow(unused)]
 //use std::ffi::OsStr;
+use std::collections::BTreeMap;
 use std::ffi::OsString;
 //use std::path::PathBuf;
 
@@ -24,7 +25,7 @@ pub mod dele;
 pub mod ahead;
 
 
-pub async fn fix(words:Vec<String>) {
+pub async fn fix(words:Vec<String>, bt4bxm:BTreeMap<String, Vec<String>>) {
     //println!("{:?}", words);
     match words.len() {
         1 => {
@@ -58,9 +59,9 @@ pub async fn fix(words:Vec<String>) {
         2 => {
             match words[0].as_str() {
                 "seek" => {
-                    // 匹配到 seek 指令
-                    println!("Command: seek");
-                    println!("Other string: {}", words[1]);
+                    //seek::echo(words[1].clone());
+                    seek::echo2(words[1].clone(),bt4bxm);
+                    println!("{}", _util::H_MORE);
                 },
                 "find" => {
                     // 匹配到 find 指令
@@ -78,8 +79,9 @@ pub async fn fix(words:Vec<String>) {
             match words[0].as_str() {
                 "cfg" => {
                     println!("Command: cfg");
-                    println!("Code value: {}", words[1]);
-                    println!("Text: {}", words[2]);
+                    //println!("Code value: {}", words[1]);
+                    //println!("Text: {}", words[2]);
+                    cfg::set(words[1].clone(), words[2].clone());
                 },
                 "upd" => {
                     println!("Command: upd");

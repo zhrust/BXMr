@@ -13,11 +13,14 @@ async fn main()  -> Result<()> {
 
     // `()` can be used when no completer is required
     let mut rl = DefaultEditor::new()?;
-    //#[cfg(feature = "with-file-history")]
-    //if rl.load_history("history.txt").is_err() {
-    //    println!("No previous history.");
-    //}
     let mut hl: Vec<String> = Vec::new();
+
+
+if let Some(btree) = inv::renew::load2btree() {
+    let bt4bxm = *btree;
+    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
+//}
+
     loop {
         let readline = rl.readline("BXMr> ");
         match readline {
@@ -25,32 +28,13 @@ async fn main()  -> Result<()> {
                 //rl.add_history_entry(line.as_str())?;
                 //println!("Line: {}", line.clone());
                 hl.push(line.clone());
-
-
-let mut cmds: Vec<String> = line
-                .clone()
-                .split_whitespace()
-                .map(|s| s.to_string())
-                .collect();
-//println!("{:?}", cmds);
-
-inv::fix(cmds).await;
-
-//inv::run().await;
-/* #[derive(Debug, Parser)]
-pub struct Cli {
-    #[command(subcommand)]
-    pub command: Commands,
-}
-#[derive(Debug, clap::Parser)]
-pub enum Commands {
-    #[command(external_subcommand)]
-    External(Vec<OsString>),
-}
-let args = Cli::parse();
-log::debug!("src/inv/mod:{:?}", args);
- */
-
+            let mut cmds: Vec<String> = line
+                            .clone()
+                            .split_whitespace()
+                            .map(|s| s.to_string())
+                            .collect();
+            //println!("{:?}", cmds);
+            inv::fix(cmds, bt4bxm.clone()).await;
             },
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
@@ -66,6 +50,8 @@ log::debug!("src/inv/mod:{:?}", args);
             }
         }
     }
+
+}//inv::renew::load2btree()
     //#[cfg(feature = "with-file-history")]
     //rl.save_history("history.txt");
     println!("BXMr this loop all commands:\n{:?}\n", hl);

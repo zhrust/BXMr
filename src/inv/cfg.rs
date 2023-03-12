@@ -2,18 +2,22 @@
 //use crate::inv::OsString;
 //use crate::git::OsStr;
 use crate::inv::_util as util;
-pub fn set(name: String, path: String) {
-    println!("set ENV:\n\t {}={}", name, path);
 
+pub fn set(name: String, path: String) {
+    println!("try set ENV:\n{} -> {}", name, path);
     if name =="yaml" {
-        println!("upd..env => {}={}",util::ENV_YAML, &path);
+        println!("upd..env =>\n{} -> {}",util::ENV_YAML, &path);
         util::upd_denv(util::ENV_YAML, &path);
-        
-    }else if name =="toml" {
-        println!("upd..env => {}={}",util::ENV_TOML, &path);
+
+    }
+    /* else if name =="toml" {
+        println!("upd..env =>\n{} -> {}",util::ENV_TOML, &path);
         util::upd_denv(util::ENV_TOML, &path);
-        
-    }else {
+
+    } */
+    else {
+        println!("{}",util::H_CFG);
+        /* 
         println!(r#" ALERT! only support two option cfg:
         $ bxmr cfg [toml|yaml]
         means:
@@ -23,7 +27,7 @@ pub fn set(name: String, path: String) {
             + yaml ~> rIME usage system's Squirrel path, 
                 in macOS default is ~//Library/Rime/
                 for my customization file is bxm4zq2mac.dict.yaml 
-        "#);
+        "#); */
     }
 
     //log::debug!("src/inv/upd:\n\t {} \n\t{}", code, word);

@@ -62,25 +62,71 @@ pub fn load() {
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
 }
-
-pub fn load2btree() {
+/* 
+//pub fn load2btree() -> Option<&'static mut BTreeMap<String, Vec<String>>> {
+//pub fn load2btree() -> Option<Box<BTreeMap<String, Vec<String>>>> {
+pub fn load2btree() -> Option<&'static mut BTreeMap<String, Vec<String>>> {
     match util::chk_denv(util::ENV_YAML) {
         util::EnvResult::Success(_ekey, _yaml) => {
             println!("env hold:{}={}",_ekey,_yaml);
             let _ycodes = util::yaload(_yaml);
-            let mut _bxm = util::init2(4);
-            //println!("{:?}",_bxm);
-/* 
-if let Some(bxm) = _bxm.as_ref() {
-        for (key, values) in bxm.iter().take(10) {
-            println!("{}: {:?}", key, values);
-        }
-    } */
-            flush4bxm(_ycodes,_bxm.as_mut().unwrap());
+
+            //let mut _bxm = util::init2(4);
+            let mut _bxm = Box::new(util::init2(4));
+
+            let mut c4bxm = flush4bxm(_ycodes, _bxm.as_mut().unwrap());
+
+            Some(c4bxm)
+
         },
-        util::EnvResult::Failure(e) => println!("failed: {}", e),
+        util::EnvResult::Failure(e) => {
+            println!("failed: {}", e);
+            None
+        },
+    }
+} */
+
+
+pub fn load2btree() -> Option<Box<BTreeMap<String, Vec<String>>>> {
+    match util::chk_denv(util::ENV_YAML) {
+        util::EnvResult::Success(_ekey, _yaml) => {
+            println!("env hold:{}={}",_ekey,_yaml);
+            let _ycodes = util::yaload(_yaml);
+
+            let mut _bxm = util::init2(4);
+
+            let c4bxm = flush4bxm(_ycodes, _bxm.as_mut().unwrap());
+
+            Some(Box::new(c4bxm.clone()))
+        },
+        util::EnvResult::Failure(e) => {
+            println!("failed: {}", e);
+            None
+        },
     }
 }
+
+
+/*USAGE:
+if let Some(btree) = load2btree() {
+    let bt = *btree;
+    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
+}
+
+let btree = match load2btree() {
+    Some(map) => map,
+    None => {
+        println!("Failed to load BTreeMap");
+        // 使用默认值
+        &mut BTreeMap::new()
+    },
+};
+
+// 对 BTreeMap 进行修改
+btree.insert("key".to_string(), vec!["value1".to_string(), "value2".to_string()]);
+
+*/
+
 
 pub fn flush4bxm(ycodes:Vec<(String, String)>,
             code4btmap: &mut BTreeMap<String, Vec<String>>

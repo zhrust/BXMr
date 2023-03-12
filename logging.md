@@ -48,8 +48,8 @@
       - [x] help
       - [x] ver
       - [x] env
-      - [ ] cfg
-      - [ ] seek
+      - [x] cfg
+      - [x] seek
       - [ ] find
       - [ ] upd
       - [ ] dele

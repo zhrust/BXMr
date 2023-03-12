@@ -99,7 +99,10 @@ pub const H_MORE: &str = r#"
 -----------------------------------------
 all BXMr command, call ?|h|help
     "#;
-pub const H_CFG: &str = r#"usage as:
+
+pub const H_CFG: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
 ~ point u rIME-Squirrel usage .yaml
 e.g: for me
@@ -108,42 +111,54 @@ cfg yaml /Users/zoomq/Library/Rime/bxm4zq2mac.dict.yaml
 all BXMr command, call ?|h|help
     "#;
 
-pub const H_ENV: &str = r#"usage as:
+pub const H_ENV: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> env 
 ~ will print config info.
 
 all BXMr command, call ?|h|help
     "#;
 
-pub const H_SEEK: &str = r#"usage as:
+pub const H_SEEK: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> seek aaa 
 ~ base code SEEK word is exist?
 
 all BXMr command, call ?|h|help
     "#;
 
-pub const H_FIND: &str = r#"usage as:
+pub const H_FIND: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> find 叒
 ~ base word FIND code is exist?
 
 all BXMr command, call ?|h|help
     "#;
 
-pub const H_UPD: &str = r#"usage as:
+pub const H_UPD: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> upd aaa 叒
 ~ base code&word UPGRADE the define in BXM codes
 
 all BXMr command, call ?|h|help
     "#;
 
-pub const H_DELE: &str = r#"usage as:
+pub const H_DELE: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> dele aaa 叒
 ~ base code&word DELET the define from BXM codes
 
 all BXMr command, call ?|h|help
     "#;
 
-pub const H_AHEAD: &str = r#"usage as:
+pub const H_AHEAD: &str = r#"
+-----------------------------------------
+usage as:
 BXMr> ahead aaa 叒
 ~ base code&word AHEAD the define into top suggest list with rIME::BXM
 
