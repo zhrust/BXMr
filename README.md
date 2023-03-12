@@ -2,7 +2,7 @@
 > BXM manager ~ a CLI tool for servicing code table of BXM under rIME-Squirrel
 > 叕一个 CLI 工具为 rIME-Squirrel 维护 BXM 输入法码表而创立
 
-
+![bxmr_v0.23.312_usage](https://ipic.zoomquiet.top/2023-03-12-bxmr_v0.23.312_usage.gif)
 
 ------
 ## Command-line options
