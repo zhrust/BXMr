@@ -7,8 +7,9 @@ use clap::Parser;
 //use clap::{AppSettings, Parser, Subcommand};
 
 pub mod _util;
-pub mod _cfg;
-pub mod _env;
+pub mod cfg;
+pub mod env;
+pub mod ver;
 
 //pub mod usage;
 pub mod init;
@@ -24,14 +25,23 @@ pub mod ahead;
 
 
 pub async fn fix(words:Vec<String>) {
-    println!("{:?}", words);
-
+    //println!("{:?}", words);
     match words.len() {
         1 => {
             match words[0].as_str() {
                 "?" | "h" | "help" => {
-                    println!("Command: help");
-                    println!("Command: {}", words[0]);
+                    //println!("Command: help");
+                    //println!("Command: {}", words[0]);
+                    println!("{}", _util::H_HELP);
+                },
+                "env" => {
+                    println!("Command: env");
+                    println!("Other string: {}", words[0]);
+                },
+                "ver" => {
+                    //println!("Command: ver");
+                    //println!("Other string: {}", words[0]);
+                    ver::echo();
                 },
                 "renew" => {
                     println!("Command: renew");
@@ -45,6 +55,7 @@ pub async fn fix(words:Vec<String>) {
                 _ => {
                     // 其它情况
                     println!("Unknown command: {}", words[0]);
+                    println!("{}", _util::H_HELP);
                 }
             }
         },
@@ -63,26 +74,43 @@ pub async fn fix(words:Vec<String>) {
                 _ => {
                     // 其它情况
                     println!("Unknown command: {}", words[0]);
+                    println!("{}", _util::H_HELP);
                 }
             }
         },
         3 => {
             match words[0].as_str() {
+                "cfg" => {
+                    println!("Command: cfg");
+                    println!("Code value: {}", words[1]);
+                    println!("Text: {}", words[2]);
+                },
                 "upd" => {
-                    // 匹配到 upd 指令
                     println!("Command: upd");
+                    println!("Code value: {}", words[1]);
+                    println!("Text: {}", words[2]);
+                },
+                "dele" => {
+                    println!("Command: dele");
+                    println!("Code value: {}", words[1]);
+                    println!("Text: {}", words[2]);
+                },
+                "ahead" => {
+                    println!("Command: ahead");
                     println!("Code value: {}", words[1]);
                     println!("Text: {}", words[2]);
                 },
                 _ => {
                     // 其它情况
                     println!("Unknown command: {}", words[0]);
+                    println!("{}", _util::H_HELP);
                 }
             }
         },
         _ => {
             // 其它情况
             println!("Unknown command");
+            println!("{}", _util::H_HELP);
         }
     }//match cmds.len()
 
@@ -228,9 +256,9 @@ pub async fn run() {
     match args.command {
     // name.path
         Commands::Cfg {
-            name, path }=> _cfg::set(name, path),
+            name, path }=> cfg::set(name, path),
     // not need arg.
-        Commands::Env   => _env::chk(),
+        Commands::Env   => env::chk(),
         //Commands::Usage   => usage::echo(),
 
         Commands::Init => init::init(),

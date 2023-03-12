@@ -44,10 +44,11 @@
 - [ ] 加速全序 .toml 使用
     - [x] 类似 REPL 交互, 在不退出前, 只加载一次码表到内存中
     - [ ] 迁移所有指令到对应识别中
-      - [ ] help
+      - [x] renew ~ 每次都使用 .yaml 在内存中重建 字典 全集,不再从 toml 加载
+      - [x] help
+      - [x] ver
       - [ ] cfg
       - [ ] env
-      - [ ] renew ~ 每次都使用 .yaml 在内存中重建 字典 全集,不再从 toml 加载
       - [ ] seek
       - [ ] find
       - [ ] upd

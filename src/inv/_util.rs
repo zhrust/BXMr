@@ -53,6 +53,99 @@ sort: original
 
 "#;
 
+pub const H_HELP: &str = r#"
+------
+BXMr Commands:
+help   Print this message or the help of the given subcommand(s)
+cfg    point where is u rIME base *.dict.yaml
+env    check bind ENV setting, work with command:cfg
+ver    echo current BXMr version info.
+gen    re-generating .yaml -> ~/Library/Rime/[U BXM].yaml,config by command: cfg
+seek   base code SEEK word is exist?
+find   base word FIND code is exist?
+upd    aaa 叒 <~ base code word UPGRADE the define in BXM
+dele   aaa 叒 ~> base code word DELET the define from BXM
+ahead  aaa 叒 => base code word UP the word define 1st in BXM
+
+------
+BXMr Usage:
+0: must setup .env for all Commands;
+$ bxmr
+BXMr> cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
+        ~ point u rIME-Squirrel usage .yaml
+>>> daily usage flow loop:
+$ bxmr 
+BXMr> ?
+... print this help
+BXMr> seek aaa
+.. seek the code is exist?
+BXMr> upd aaa 叒
+... if not exist, u can append it:
+    $ bxmr upd aaa 叒
+BXMr> find 叒
+... or find the word's code is exist? ~> find 字词
+BXMr> gen
+... if enough now, must export to .yaml:
+
+... if want exit BXMr
+BXMr> CTRL-D | CTRL-C
+
+at last, always need usage rIME's re-deploy menu, 
+    for load new code-table .yaml,
+    so we can enjoy new BXM now ;-)
+    "#;
+
+pub const H_CFG: &str = r#"usage as:
+BXMr> cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
+~ point u rIME-Squirrel usage .yaml
+e.g: for me
+cfg yaml /Users/zoomq/Library/Rime/bxm4zq2mac.dict.yaml
+
+all BXMr command, call ?|h|help
+    "#;
+
+pub const H_ENV: &str = r#"usage as:
+BXMr> env 
+~ will print config info.
+
+all BXMr command, call ?|h|help
+    "#;
+
+pub const H_SEEK: &str = r#"usage as:
+BXMr> seek aaa 
+~ base code SEEK word is exist?
+
+all BXMr command, call ?|h|help
+    "#;
+
+pub const H_FIND: &str = r#"usage as:
+BXMr> find 叒
+~ base word FIND code is exist?
+
+all BXMr command, call ?|h|help
+    "#;
+
+pub const H_UPD: &str = r#"usage as:
+BXMr> upd aaa 叒
+~ base code&word UPGRADE the define in BXM codes
+
+all BXMr command, call ?|h|help
+    "#;
+
+pub const H_DELE: &str = r#"usage as:
+BXMr> dele aaa 叒
+~ base code&word DELET the define from BXM codes
+
+all BXMr command, call ?|h|help
+    "#;
+
+pub const H_AHEAD: &str = r#"usage as:
+BXMr> ahead aaa 叒
+~ base code&word AHEAD the define into top suggest list with rIME::BXM
+
+all BXMr command, call ?|h|help
+    "#;
+
 /*
 use std::path::Path;
 

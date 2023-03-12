@@ -19,11 +19,11 @@ async fn main()  -> Result<()> {
     //}
     let mut hl: Vec<String> = Vec::new();
     loop {
-        let readline = rl.readline(">> ");
+        let readline = rl.readline("BXMr> ");
         match readline {
             Ok(line) => {
                 //rl.add_history_entry(line.as_str())?;
-                println!("Line: {}", line.clone());
+                //println!("Line: {}", line.clone());
                 hl.push(line.clone());
 
 
@@ -68,7 +68,7 @@ log::debug!("src/inv/mod:{:?}", args);
     }
     //#[cfg(feature = "with-file-history")]
     //rl.save_history("history.txt");
-    println!("{:?}", hl);
+    println!("BXMr this loop all commands:\n{:?}\n", hl);
 
     Ok(())
 }
