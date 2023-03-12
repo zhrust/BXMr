@@ -90,10 +90,10 @@ pub fn load2btree() -> Option<&'static mut BTreeMap<String, Vec<String>>> {
 pub fn load2btree() -> Option<Box<BTreeMap<String, Vec<String>>>> {
     match util::chk_denv(util::ENV_YAML) {
         util::EnvResult::Success(_ekey, _yaml) => {
-            println!("env hold:{}={}",_ekey,_yaml);
-            let _ycodes = util::yaload(_yaml);
-
+            //println!("env hold:{}={}",_ekey,_yaml);
             let mut _bxm = util::init2(4);
+
+            let _ycodes = util::yaload(_yaml);
 
             let c4bxm = flush4bxm(_ycodes, _bxm.as_mut().unwrap());
 
@@ -131,10 +131,12 @@ btree.insert("key".to_string(), vec!["value1".to_string(), "value2".to_string()]
 pub fn flush4bxm(ycodes:Vec<(String, String)>,
             code4btmap: &mut BTreeMap<String, Vec<String>>
         )-> &mut BTreeMap<String, Vec<String>> {
-    println!("fix memory BTreeMap obj. from .yaml as {} codes", ycodes.len());
+    //println!("fix memory BTreeMap obj. from .yaml as {} codes", ycodes.len());
 
-    let pb = ProgressBar::new(ycodes.len() as u64);
+    let ylen = ycodes.len();
+    let pb = ProgressBar::new(ylen as u64);
 
+    println!("\t load rIME usage data=> {} lines, merge inro BXM code.\n",ylen);
     //let mut code4btmap;
     for (i, (k, v)) in ycodes.iter().enumerate() {
         //util::upd(k, v, code4btmap);

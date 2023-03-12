@@ -97,7 +97,8 @@ at last, always need usage rIME's re-deploy menu,
 
 pub const H_MORE: &str = r#"
 -----------------------------------------
-all BXMr command, call ?|h|help
+CTRL-D | CTRL-C can exit BXMr
+all BXMr command, ask> ?|h|help
     "#;
 
 pub const H_CFG: &str = r#"
@@ -320,7 +321,7 @@ pub fn init2(codelen:usize) -> Option<BTreeMap<String, Vec<String>>> {
     //util::generate_strings(4, String::new(), &mut gbxm);
     //generate_strings(4, String::new(), &mut gbxm);
     gen_bxm_all_codes(codelen, String::new(), &mut gbxm);
-    println!("\n\t gen. all BXM code as {} ", gbxm.clone().len());
+    println!("\t re-gen. all BXM code=> {} items", gbxm.clone().len());
 
     Some(gbxm)
 }
@@ -348,6 +349,7 @@ pub fn yaload(yfile:String) -> Vec<(String, String)> {
         }
         pb.inc(1);
     }
+    //println!("\t re-load rIME uasage .yaml data:{} lines\n",entries.len());
 
     entries
 }
@@ -357,26 +359,23 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
         Some(v) => {
             match v.iter().position(|x| x == value) {
                 Some(_/* _pos */) => {
-
                     // Do nothing
                     {}
-                    //println!("{} already exists in {:?}", value, key);
                     //log::info!("{} already exists in {:?}", value, key);
                     //dbg!(format!("{} already exists in {:?}", value, key));
                 },
                 None => {
                     v.push(value.to_owned());
                     //v.insert(0, value.to_owned()); // 插入到最前,但是, 导出 yaml 时反而在下层行
-                    //println!("\n\t Updated {} in {:?} ", value, key);
                 }
             }
         },
         None => {
             gbxm.insert(key.to_owned(), vec![value.to_owned()]);
-            //println!("\n\t Added {} to {:?} ", value, key);
         }
     }
 }
+
 /* 
 fn del_item4list(list: Vec<String>, item: &str) -> Vec<String> {
     let mut new_list = Vec::new(); // 创建一个新的动态数组
@@ -553,7 +552,7 @@ pub fn chk_denv(key: &str)-> EnvResult {
     match ok_denv() {
         Ok(f2denv) => {
             let f2denv = ok_denv().unwrap().to_str().unwrap();
-            println!("\n\t load .env <-{} ", f2denv);
+            println!("load .env <-{} ", f2denv);
             dotenv::from_path(&f2denv).ok();
             //let val = std::env::var(key);
 

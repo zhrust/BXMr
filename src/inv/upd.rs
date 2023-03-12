@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use crate::inv::_util as util;
 
 /* 
@@ -42,4 +43,38 @@ pub async fn upd(code: String, word: String) {
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
 }
+
+pub fn upd2(code: String
+        , word: String
+        , c4btmap: &mut BTreeMap<String, Vec<String>>
+    )-> Option<Box<BTreeMap<String, Vec<String>>>> {
+
+    if let Some(word5bxm) = c4btmap.get_mut(&code) {
+        // println!("hold: {}", word5bxm.len());
+        if word5bxm.iter().any(|w| w == &word) {
+            println!(
+                "hold: {} -> {:?}\n\t no need upgrade code.",
+                code,
+                word5bxm.clone()
+            );
+            None
+        } else {
+            util::upd(&code, &word, c4btmap);
+            println!(
+                "inserted: {} -> {:?}",
+                code,
+                c4btmap.get(&code).unwrap().clone()
+            );
+            Some(Box::new(c4btmap.clone()))
+        }
+    }else{
+        None
+    }
+}
+
+
+
+
+
+
 

@@ -17,9 +17,10 @@ async fn main()  -> Result<()> {
 
 
 if let Some(btree) = inv::renew::load2btree() {
-    let bt4bxm = *btree;
+    let mut bt4bxm = *btree;
     // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
 //}
+    println!("{}", inv::_util::H_MORE);
 
     loop {
         let readline = rl.readline("BXMr> ");
@@ -34,7 +35,7 @@ if let Some(btree) = inv::renew::load2btree() {
                             .map(|s| s.to_string())
                             .collect();
             //println!("{:?}", cmds);
-            inv::fix(cmds, bt4bxm.clone()).await;
+            inv::fix(cmds, &mut bt4bxm).await;
             },
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");

@@ -1,5 +1,4 @@
-//use std::fs::File;
-//use std::io::Write;
+use std::collections::BTreeMap;
 //use toml::Value;
 use indicatif::ProgressBar;
 
@@ -40,13 +39,13 @@ pub fn echo(word: String) {
     }
 }
 
-/*
-let vec = vec!["啊啊啊", "奸", "叒"];
-if vec.contains(&"叒") {
-    println!("叒 存在于 Vec 中");
-} else {
-    println!("叒 不存在于 Vec 中");
+
+
+pub fn echo2(word: String, bt4bxm:&mut BTreeMap<String, Vec<String>>) {
+        for (code, words) in bt4bxm {
+            if words.contains(&word) {
+                println!("BXMr hold:{}<-{}",word,code);
+                break;
+            }
+        }
 }
-
-
-*/

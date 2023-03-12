@@ -37,7 +37,7 @@ pub async fn echo(code: String) {
 }
 
 
-pub fn echo2(code: String, bt4bxm:BTreeMap<String, Vec<String>>) {
+pub fn echo2(code: String, bt4bxm:&mut BTreeMap<String, Vec<String>>) {
 
     if let Some(word5bxm) = bt4bxm.clone().get_mut(&code) {
         if word5bxm.len() == 0{

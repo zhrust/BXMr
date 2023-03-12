@@ -25,7 +25,7 @@ pub mod dele;
 pub mod ahead;
 
 
-pub async fn fix(words:Vec<String>, bt4bxm:BTreeMap<String, Vec<String>>) {
+pub async fn fix(words:Vec<String>, bt4bxm:&mut BTreeMap<String, Vec<String>>) {
     //println!("{:?}", words);
     match words.len() {
         1 => {
@@ -64,9 +64,8 @@ pub async fn fix(words:Vec<String>, bt4bxm:BTreeMap<String, Vec<String>>) {
                     println!("{}", _util::H_MORE);
                 },
                 "find" => {
-                    // 匹配到 find 指令
-                    println!("Command: find");
-                    println!("Other string: {}", words[1]);
+                    find::echo2(words[1].clone(),bt4bxm);
+                    println!("{}", _util::H_MORE);
                 },
                 _ => {
                     // 其它情况
@@ -84,9 +83,18 @@ pub async fn fix(words:Vec<String>, bt4bxm:BTreeMap<String, Vec<String>>) {
                     cfg::set(words[1].clone(), words[2].clone());
                 },
                 "upd" => {
-                    println!("Command: upd");
-                    println!("Code value: {}", words[1]);
-                    println!("Text: {}", words[2]);
+                    //bt4bxm = upd::upd2(words[1].clone()
+                    //    , words[2].clone()
+                    //    , &mut bt4bxm);
+
+if let Some(bt4bxm) = upd::upd2(words[1].clone()
+                        , words[2].clone()
+                        , bt4bxm) {
+    let bt4bxm = *bt4bxm;
+    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
+    }
+                    println!("{}", _util::H_MORE);
+
                 },
                 "dele" => {
                     println!("Command: dele");

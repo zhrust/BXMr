@@ -50,8 +50,8 @@
       - [x] env
       - [x] cfg
       - [x] seek
-      - [ ] find
-      - [ ] upd
+      - [x] find
+      - [x] upd ~ 全局使用 BTreeMap
       - [ ] dele
       - [ ] ahead
       - [ ] gen
