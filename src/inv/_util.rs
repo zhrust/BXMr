@@ -376,27 +376,6 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
     }
 }
 
-/* 
-fn del_item4list(list: Vec<String>, item: &str) -> Vec<String> {
-    let mut new_list = Vec::new(); // 创建一个新的动态数组
-
-    for string in list {
-        if string != item {
-            new_list.push(string); // 如果当前字符串不是要删除的字符串，将其添加到新的动态数组中
-        }
-    }
-
-    new_list // 返回新的动态数组
-}
-
-pub fn del_item4list(list: Vec<String>, word: &str) -> Vec<String> {
-    list
-        .into_iter()
-        .filter(|string| *string != word)
-        .collect()
-}
-
- */
 
 pub fn del_item4list(list: &mut Vec<String>, word: &str) {
     list.retain(|x| x != word);
