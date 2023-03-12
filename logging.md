@@ -54,9 +54,9 @@
       - [x] upd ~ 8b28069 ++ 全局使用 BTreeMap
       - [x] dele ~ 34847cb
       - [x] ahead ~ c91142f
-      - [ ] gen
-    - [ ] 检验多次写出到 .yaml 时是否冲突
-    - [ ] ...
+      - [x] gen
+    - [x] 检验多次写出到 .yaml 时是否冲突
+    - [x] 录制 git 说明动画
 - [ ] ?用 SQLite3 来替代 .toml 加速
     - [ ] 设计 SQLite 数据库表
     - [ ] 从 .toml 加载回原有 码表数据

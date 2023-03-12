@@ -50,7 +50,8 @@ pub fn up1st2(code: String
             , code
             , word5bxm
         );
-        word5bxm.push(word);                   // append again
+        //word5bxm.push(word);        // append again
+        word5bxm.insert(0,word);   // insert the head
         //util::upd(&code, &word, &mut c4btmap);
         println!("inserted: {} -> {:?}"
             , code
