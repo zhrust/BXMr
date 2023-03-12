@@ -8,6 +8,9 @@
 //use std::io::BufRead;
 //use std::io::{BufRead, BufReader};
 //use std::path::Path;
+use std::thread;
+use std::time::Duration;
+use std::collections::BTreeMap;
 
 //use toml::Value;
 use indicatif::ProgressBar;
@@ -32,8 +35,8 @@ pub fn flusht(ycodes:Vec<(String, String)>) {
                 Some(mut code4btmap) => {
                     for (i, (k, v)) in ycodes.iter().enumerate() {
                         util::upd(k, v, &mut code4btmap);
-                        pb.set_position((i + 1) as u64);
-                        //pb.inc(1);
+                        //pb.set_position((i + 1) as u64);
+                        pb.inc(1);
                     }
             pb.finish_with_message("load all Yaml data.");
 
@@ -49,22 +52,53 @@ pub fn flusht(ycodes:Vec<(String, String)>) {
 
 }
 
-//pub fn load(yaml: String) {
 pub fn load() {
     match util::chk_denv(util::ENV_YAML) {
         util::EnvResult::Success(_ekey, _yaml) => {
-            //println!("Key is OK");
             //println!("env hold:{}={}",dkey,dval);
             let _ycodes = util::yaload(_yaml);
             flusht(_ycodes);
         },
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
-    //let res = format!("{}/{}",p2rime,bxm4mac);
-    //log::debug!("load()<- {}", res);
-    //yaload(res);
-
 }
 
+pub fn load2btree() {
+    match util::chk_denv(util::ENV_YAML) {
+        util::EnvResult::Success(_ekey, _yaml) => {
+            println!("env hold:{}={}",_ekey,_yaml);
+            let _ycodes = util::yaload(_yaml);
+            let mut _bxm = util::init2(4);
+            //println!("{:?}",_bxm);
+/* 
+if let Some(bxm) = _bxm.as_ref() {
+        for (key, values) in bxm.iter().take(10) {
+            println!("{}: {:?}", key, values);
+        }
+    } */
+            flush4bxm(_ycodes,_bxm.as_mut().unwrap());
+        },
+        util::EnvResult::Failure(e) => println!("failed: {}", e),
+    }
+}
+
+pub fn flush4bxm(ycodes:Vec<(String, String)>,
+            code4btmap: &mut BTreeMap<String, Vec<String>>
+        )-> &mut BTreeMap<String, Vec<String>> {
+    println!("fix memory BTreeMap obj. from .yaml as {} codes", ycodes.len());
+
+    let pb = ProgressBar::new(ycodes.len() as u64);
+
+    //let mut code4btmap;
+    for (i, (k, v)) in ycodes.iter().enumerate() {
+        //util::upd(k, v, code4btmap);
+        //thread::sleep(Duration::from_millis(4));
+        util::upd(k, v, code4btmap);
+        pb.inc(1);
+    }
+    pb.finish_with_message("load all Yaml data.");
+
+    code4btmap
+}
 
 

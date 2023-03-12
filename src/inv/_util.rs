@@ -188,28 +188,27 @@ fn load_toml(tfile:String) {
 }
 
 
-pub fn generate_strings(length: usize, 
+pub fn gen_bxm_all_codes(length: usize, 
             prefix: String, 
             gbxm: &mut BTreeMap<String, Vec<String>>
-        ) {
-        if length == 0 {
-            return;
-        }
-        for c in BXMC.chars() {
-            let key = prefix.clone() + &c.to_string();
-            //println!("{}", key);
-            gbxm.insert(key.clone(), Vec::new());
-            generate_strings(length - 1, key, gbxm);
-        }
+    ) {
+    if length == 0 {
+        return;
     }
-
+    for c in BXMC.chars() {
+        let key = prefix.clone() + &c.to_string();
+        //println!("{}", key);
+        gbxm.insert(key.clone(), Vec::new());
+        gen_bxm_all_codes(length - 1, key, gbxm);
+    }
+}
 
 pub fn init2(codelen:usize) -> Option<BTreeMap<String, Vec<String>>> {
     let mut gbxm = BTreeMap::new();
     //util::generate_strings(4, String::new(), &mut gbxm);
     //generate_strings(4, String::new(), &mut gbxm);
-    generate_strings(codelen, String::new(), &mut gbxm);
-    println!("\n\t gen. all BXM code as {} ", gbxm.len());
+    gen_bxm_all_codes(codelen, String::new(), &mut gbxm);
+    println!("\n\t gen. all BXM code as {} ", gbxm.clone().len());
 
     Some(gbxm)
 }
@@ -221,10 +220,12 @@ pub fn yaload(yfile:String) -> Vec<(String, String)> {
     //let path = Path::new(&yfile);
     //let file = File::open(path)?;
     //let reader = BufReader::new(file);
-    let lines = reader.lines().skip(9);
-
+    //let lines = reader.lines().skip(9);
+    let lines: Vec<_> = reader.lines().skip(9).collect(); // 转换成 Vec 对象
+    let pb = ProgressBar::new(lines.len() as u64);
+    //let pb = ProgressBar::new(lines.count() as u64);
     let mut entries = Vec::new();
-    
+
     for line in lines {
         let line = line.expect("Failed to read line");
         let parts: Vec<&str> = line.split('\t').collect();
@@ -233,6 +234,7 @@ pub fn yaload(yfile:String) -> Vec<(String, String)> {
             entries.push((parts[1].to_string(), parts[0].to_string()));
             //println!("load:\t{}:{}",parts[1].to_string(), parts[0].to_string());
         }
+        pb.inc(1);
     }
 
     entries
@@ -304,7 +306,6 @@ pub fn save2toml(code4btmap:BTreeMap<String, Vec<String>>, toml:String){
     file.write_all(toml::to_string(&toml_value).unwrap().as_bytes()).unwrap();
     println!("\n\t saved -> {}",toml.clone());
 }
-
 
 /* 
 pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {

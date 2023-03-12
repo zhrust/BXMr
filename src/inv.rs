@@ -29,9 +29,18 @@ pub async fn fix(words:Vec<String>) {
     match words.len() {
         1 => {
             match words[0].as_str() {
-                "?" | "h" | "gen" | "renew" => {
-                    // 匹配到 ?、h、gen、renew 指令
+                "?" | "h" | "help" => {
+                    println!("Command: help");
                     println!("Command: {}", words[0]);
+                },
+                "renew" => {
+                    println!("Command: renew");
+                    println!("Other string: {}", words[0]);
+                    renew::load2btree();
+                },
+                "gen" => {
+                    println!("Command: gen");
+                    println!("Other string: {}", words[0]);
                 },
                 _ => {
                     // 其它情况
