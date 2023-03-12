@@ -30,23 +30,19 @@ pub async fn fix(words:Vec<String>) {
         1 => {
             match words[0].as_str() {
                 "?" | "h" | "help" => {
-                    //println!("Command: help");
-                    //println!("Command: {}", words[0]);
                     println!("{}", _util::H_HELP);
                 },
                 "env" => {
-                    println!("Command: env");
-                    println!("Other string: {}", words[0]);
+                    env::chk();
+                    println!("{}", _util::H_MORE);
                 },
                 "ver" => {
-                    //println!("Command: ver");
-                    //println!("Other string: {}", words[0]);
                     ver::echo();
+                    println!("{}", _util::H_MORE);
                 },
                 "renew" => {
-                    println!("Command: renew");
-                    println!("Other string: {}", words[0]);
                     renew::load2btree();
+                    println!("{}", _util::H_MORE);
                 },
                 "gen" => {
                     println!("Command: gen");

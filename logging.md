@@ -47,8 +47,8 @@
       - [x] renew ~ 每次都使用 .yaml 在内存中重建 字典 全集,不再从 toml 加载
       - [x] help
       - [x] ver
+      - [x] env
       - [ ] cfg
-      - [ ] env
       - [ ] seek
       - [ ] find
       - [ ] upd

@@ -54,7 +54,7 @@ sort: original
 "#;
 
 pub const H_HELP: &str = r#"
-------
+-----------------------------------------
 BXMr Commands:
 help   Print this message or the help of the given subcommand(s)
 cfg    point where is u rIME base *.dict.yaml
@@ -67,7 +67,7 @@ upd    aaa 叒 <~ base code word UPGRADE the define in BXM
 dele   aaa 叒 ~> base code word DELET the define from BXM
 ahead  aaa 叒 => base code word UP the word define 1st in BXM
 
-------
+-----------------------------------------
 BXMr Usage:
 0: must setup .env for all Commands;
 $ bxmr
@@ -95,6 +95,10 @@ at last, always need usage rIME's re-deploy menu,
     so we can enjoy new BXM now ;-)
     "#;
 
+pub const H_MORE: &str = r#"
+-----------------------------------------
+all BXMr command, call ?|h|help
+    "#;
 pub const H_CFG: &str = r#"usage as:
 BXMr> cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
 ~ point u rIME-Squirrel usage .yaml

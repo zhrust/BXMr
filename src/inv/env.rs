@@ -1,9 +1,11 @@
-//use std::ffi::OsStr;
-//use crate::inv::OsString;
-//use crate::git::OsStr;
+use crate::inv::_util as util;
 
 pub fn chk() {
-    //println!("chk ENV:\n\t {}:{}", name, path);
-    println!("chk ENV...");
-    //log::debug!("src/inv/upd:\n\t {} \n\t{}", code, word);
+    match util::chk_denv(util::ENV_YAML) {
+        util::EnvResult::Success(_ekey, _toml) => {
+            println!("{} {}",_ekey,_toml)
+        },
+        util::EnvResult::Failure(e) => println!("failed: {}", e),
+    }
 }
+
