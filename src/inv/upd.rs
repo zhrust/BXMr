@@ -1,4 +1,4 @@
-use crate::inv::util;
+use crate::inv::_util as util;
 
 /* 
 pub fn upd(code: String, word: String) {

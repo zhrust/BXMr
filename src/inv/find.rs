@@ -3,7 +3,7 @@
 //use toml::Value;
 use indicatif::ProgressBar;
 
-use crate::inv::util;
+use crate::inv::_util as util;
 
 pub fn echo(word: String) {
     //println!("src/inv/seek: {}", env!("CARGO_PKG_VERSION"));

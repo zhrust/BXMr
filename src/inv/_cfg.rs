@@ -1,7 +1,7 @@
 //use std::ffi::OsStr;
 //use crate::inv::OsString;
 //use crate::git::OsStr;
-use crate::inv::util;
+use crate::inv::_util as util;
 pub fn set(name: String, path: String) {
     println!("set ENV:\n\t {}={}", name, path);
 

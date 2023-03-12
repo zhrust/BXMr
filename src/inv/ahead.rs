@@ -1,4 +1,4 @@
-use crate::inv::util;
+use crate::inv::_util as util;
 
 pub async fn up1st(code: String, word: String) {
 /* base poit code + word

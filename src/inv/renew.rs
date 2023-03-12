@@ -13,7 +13,7 @@
 use indicatif::ProgressBar;
 //use indicatif::ProgressStyle;
 
-use crate::inv::util;
+use crate::inv::_util as util;
 
 
 pub fn flusht(ycodes:Vec<(String, String)>) {

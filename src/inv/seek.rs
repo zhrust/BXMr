@@ -2,7 +2,7 @@
 //use std::io::Write;
 //use toml::Value;
 
-use crate::inv::util;
+use crate::inv::_util as util;
 
 pub async fn echo(code: String) {
     //println!("src/inv/seek: {}", env!("CARGO_PKG_VERSION"));

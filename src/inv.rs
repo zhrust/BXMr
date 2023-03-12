@@ -6,9 +6,9 @@ use std::ffi::OsString;
 use clap::Parser;
 //use clap::{AppSettings, Parser, Subcommand};
 
-pub mod util;
-pub mod cfg;
-pub mod env;
+pub mod _util;
+pub mod _cfg;
+pub mod _env;
 
 //pub mod usage;
 pub mod init;
@@ -162,9 +162,9 @@ pub async fn run() {
     match args.command {
     // name.path
         Commands::Cfg {
-            name, path }=> cfg::set(name, path),
+            name, path }=> _cfg::set(name, path),
     // not need arg.
-        Commands::Env   => env::chk(),
+        Commands::Env   => _env::chk(),
         //Commands::Usage   => usage::echo(),
 
         Commands::Init => init::init(),

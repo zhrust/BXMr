@@ -1,6 +1,6 @@
 [package]
 name = "bxmr"
-version = "0.3.43"
+version = "0.4.42"
 edition = "2021"
 
 authors = ["Zoom.Quiet <zoomquiet+rs@gmail.com>"]
@@ -12,8 +12,8 @@ description = "a CLI tool for managment BXM's code with rIME-Squirrel"
 readme = "README.md"
 homepage = "https://rs.101.so/dev/cli_bxmr.html"
 repository = "https://github.com/zhrust/BXMr"
-keywords = ["cli", "BXM", "rIME", "Squirrel"]
-categories = ["command-line-utilities"]
+keywords = ["cli", "Chinese", "rIME", "Squirrel","generator", "YAML", "serialization","IME","input"]
+categories = ["command-line-utilities","encoding","text-processing"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 # ...

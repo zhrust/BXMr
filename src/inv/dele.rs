@@ -1,4 +1,4 @@
-use crate::inv::util;
+use crate::inv::_util as util;
 
 pub async fn kill(code: String, word: String) {
 // check .env is OK?
