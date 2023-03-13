@@ -97,6 +97,10 @@ For more information,
 - BXM [表形码](https://zh.wikipedia.org/wiki/Windows_95) ~ one great [中文输入法](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95)
 - but not tools for support BXM's code managment
 
+> PS:
+
+一切的源头: [ZqBXM/Rime\-Squirrel at master · ZoomQuiet/ZqBXM](https://github.com/ZoomQuiet/ZqBXM/tree/master/Rime-Squirrel)
+
 
 ### goal
 > as Rustacean homework ...
