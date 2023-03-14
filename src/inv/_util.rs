@@ -365,8 +365,10 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
                     //dbg!(format!("{} already exists in {:?}", value, key));
                 },
                 None => {
-                    v.push(value.to_owned());
-                    //v.insert(0, value.to_owned()); // 插入到最前,但是, 导出 yaml 时反而在下层行
+                    //v.push(value.to_owned()); // append the tail
+                    // 插入到最前,但是, 导出 yaml 时反而在下层行
+                    // 现在和 .yaml 前后一致
+                    v.insert(0, value.to_owned()); 
                 }
             }
         },
