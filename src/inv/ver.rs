@@ -5,12 +5,14 @@
 pub fn echo() {
     //println!("chk ENV:\n\t {}:{}", name, path);
     //println!("chk ENV...");
+    println!("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     println!("{: >16} {}","name:",       env!("CARGO_PKG_NAME"));
     println!("{: >16} {}","version:",    env!("CARGO_PKG_VERSION"));
     println!("{: >16} {}","desc:",       env!("CARGO_PKG_DESCRIPTION"));
     println!("{: >16} {}","authors:",    env!("CARGO_PKG_AUTHORS"));
     println!("{: >16} {}","homepage:",   env!("CARGO_PKG_HOMEPAGE"));
     println!("{: >16} {}","repo:",       env!("CARGO_PKG_REPOSITORY"));
+    println!("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     //log::debug!("src/inv/upd:\n\t {} \n\t{}", code, word);
 }
 /* 

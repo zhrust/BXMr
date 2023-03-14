@@ -8,8 +8,9 @@ use rustyline::{DefaultEditor, Result};
 
 mod inv;
 
-#[tokio::main]
-async fn main()  -> Result<()> {
+///#[tokio::main]
+//async fn main()  -> Result<()> {
+fn main()  -> Result<()> {
 
     // `()` can be used when no completer is required
     let mut rl = DefaultEditor::new()?;
@@ -35,7 +36,7 @@ if let Some(btree) = inv::renew::load2btree() {
                             .map(|s| s.to_string())
                             .collect();
             //println!("{:?}", cmds);
-            inv::fix(cmds, &mut bt4bxm).await;
+            inv::fix(cmds, &mut bt4bxm);
             },
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
@@ -55,7 +56,21 @@ if let Some(btree) = inv::renew::load2btree() {
 }//inv::renew::load2btree()
     //#[cfg(feature = "with-file-history")]
     //rl.save_history("history.txt");
-    println!("BXMr this loop all commands:\n{:?}\n", hl);
+    //println!("BXMr this loop all commands:\n{:?}\n", hl);
+    println!("\nBXMr this loop got commands:");
+    let mut count = 0;
+    for cmd in hl {
+        count +=1;
+        println!("\t{}: {}",count,cmd);
+    }
+    inv::ver::echo();
 
     Ok(())
 }
+
+
+
+
+
+
+
