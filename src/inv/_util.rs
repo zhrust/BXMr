@@ -361,14 +361,35 @@ pub fn upd(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
                 Some(_/* _pos */) => {
                     // Do nothing
                     {}
-                    //log::info!("{} already exists in {:?}", value, key);
-                    //dbg!(format!("{} already exists in {:?}", value, key));
                 },
                 None => {
                     //v.push(value.to_owned()); // append the tail
                     // 插入到最前,但是, 导出 yaml 时反而在下层行
                     // 现在和 .yaml 前后一致
                     v.insert(0, value.to_owned()); 
+                }
+            }
+        },
+        None => {
+            gbxm.insert(key.to_owned(), vec![value.to_owned()]);
+        }
+    }
+}
+
+
+pub fn put2(key: &str, value: &str, gbxm: &mut BTreeMap<String, Vec<String>>) {
+    match gbxm.get_mut(key) {
+        Some(v) => {
+            match v.iter().position(|x| x == value) {
+                Some(_/* _pos */) => {
+                    // Do nothing
+                    {}
+                    //log::info!("{} already exists in {:?}", value, key);
+                    //dbg!(format!("{} already exists in {:?}", value, key));
+                },
+                None => {
+                    // 从 yaml 中加载时,应该和源数据顺序保持一致
+                    v.push(value.to_owned()); // append the tail
                 }
             }
         },

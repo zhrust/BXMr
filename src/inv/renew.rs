@@ -141,7 +141,10 @@ pub fn flush4bxm(ycodes:Vec<(String, String)>,
     for (i, (k, v)) in ycodes.iter().enumerate() {
         //util::upd(k, v, code4btmap);
         //thread::sleep(Duration::from_millis(4));
-        util::upd(k, v, code4btmap);
+
+        //util::upd(k, v, code4btmap);
+        util::put2(k, v, code4btmap);
+        
         pb.inc(1);
     }
     pb.finish_with_message("load all Yaml data.");

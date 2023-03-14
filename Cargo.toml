@@ -1,6 +1,6 @@
 [package]
 name = "bxmr"
-version = "0.23.314"
+version = "23.314.2"
 edition = "2021"
 
 authors = ["Zoom.Quiet <zoomquiet+rs@gmail.com>"]
