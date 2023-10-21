@@ -77,6 +77,7 @@ BXMr> cfg yaml path/2/u/local/bxm4zq2mac.dict.yaml
 $ bxmr 
 BXMr> ?
 ... print this help
+
 BXMr> seek aaa
 .. seek the code is exist?
 BXMr> upd aaa 叒
@@ -87,8 +88,20 @@ BXMr> find 叒
 BXMr> gen
 ... if enough now, must export to .yaml:
 
+BXMr> dele   aaa 叒
+... ~> base code word DELET the define from BXM
+BXMr> ahead  aaa 叒
+... => base code word UP the word define 1st in BXM
+
+... if want research BXMr
+BXMr> ahead  aaa 叒
+... => base code word UP the word define 1st in BXM
+
 ... if want exit BXMr
-BXMr> CTRL-D | CTRL-C
+BXMr> env
+... check bind ENV setting, work with command:cfg
+BXMr> ver
+... echo current BXMr version info.
 
 at last, always need usage rIME's re-deploy menu, 
     for load new code-table .yaml,

@@ -115,6 +115,7 @@ tcmalloc - 这是一个由 Google 开发的内存分配器，可在许多不同�
 
 ## logging
 
+- 231021 ZQ 发现忘记了ahead 的 help
 - ...
 - 230312 ZQ 重构, 使用内存数据对象, 放弃 .toml 实体中间文件
 - 230307 ZQ 优化, 使用 tokio 加速文件读取
