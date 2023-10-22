@@ -88,24 +88,24 @@ BXMr> find 叒
 BXMr> gen
 ... if enough now, must export to .yaml:
 
+... and other BXM code adjust:
 BXMr> dele   aaa 叒
 ... ~> base code word DELET the define from BXM
 BXMr> ahead  aaa 叒
 ... => base code word UP the word define 1st in BXM
 
 ... if want research BXMr
-BXMr> ahead  aaa 叒
-... => base code word UP the word define 1st in BXM
-
-... if want exit BXMr
 BXMr> env
 ... check bind ENV setting, work with command:cfg
 BXMr> ver
 ... echo current BXMr version info.
 
+... if want exit BXMr
+BXMr> CTRL-D | CTRL-C
+
 at last, always need usage rIME's re-deploy menu, 
     for load new code-table .yaml,
-    so we can enjoy new BXM now ;-)
+    so enjoy your new BXM now ;-)
     "#;
 
 pub const H_MORE: &str = r#"
