@@ -30,10 +30,10 @@ use indicatif::ProgressBar;
 //use tokio::fs::File as async_File;
 //use tokio::io::{self as async_io, AsyncBufReadExt};
 //use tokio::io::{AsyncBufReadExt, BufReader};
-use tokio::io::AsyncBufReadExt;
-use tokio::io::BufReader as TokioBufReader;
+//use tokio::io::AsyncBufReadExt;
+//use tokio::io::BufReader as TokioBufReader;
 //use tokio::fs::File;
-use tokio::fs::File as TokioFile;
+//use tokio::fs::File as TokioFile;
 
 pub const ENV_YAML: &str = "BXMR_AIM_YAML";
 pub const ENV_TOML: &str = "BXMR_TEMP_TOML";
@@ -185,6 +185,7 @@ use std::path::Path;
 let my_path_str = "/path/to/my/file.txt";
 let my_path = Path::new(my_path_str);
 */
+/*
 pub async fn async_read_lines<P>(path: P) -> Result<Vec<String>, io::Error>
 where
     P: AsRef<std::path::Path>,
@@ -208,6 +209,7 @@ where
     }
     Ok(lines)
 }
+*/
 
 /* 
 pub async fn speed_openf(tfile:String)-> io::Result<()> {
@@ -220,6 +222,7 @@ pub async fn speed_openf(tfile:String)-> io::Result<()> {
 }
  */
 
+/*
 pub async fn async_toml2btmap(tfile: String) -> Option<BTreeMap<String, Vec<String>>> {
     println!("opening {}...", tfile);
 
@@ -253,6 +256,7 @@ pub async fn async_toml2btmap(tfile: String) -> Option<BTreeMap<String, Vec<Stri
 
     Some(map)
 }
+*/
 
 
 pub fn toml2btmap(tfile:String) -> Option<BTreeMap<String, Vec<String>>> {

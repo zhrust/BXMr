@@ -7,6 +7,7 @@ pub fn upd(code: String, word: String) {
     log::debug!("src/inv/upd:\n\t {} \n\t{}", code, word);
 } */
 
+/*
 pub async fn upd(code: String, word: String) {
     //println!("src/inv/seek: {}", env!("CARGO_PKG_VERSION"));
     // check .env is OK?
@@ -43,21 +44,23 @@ pub async fn upd(code: String, word: String) {
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
 }
+*/
 
+/// Updates BXM code table: adds word to code entry if not exists
+/// Returns Ok(true) if data was modified, Ok(false) if no change needed
 pub fn upd2(code: String
         , word: String
         , c4btmap: &mut BTreeMap<String, Vec<String>>
-    )-> Option<Box<BTreeMap<String, Vec<String>>>> {
+    ) -> anyhow::Result<bool> {
 
     if let Some(word5bxm) = c4btmap.get_mut(&code) {
-        // println!("hold: {}", word5bxm.len());
         if word5bxm.iter().any(|w| w == &word) {
             println!(
                 "hold: {} -> {:?}\n\t no need upgrade code.",
                 code,
                 word5bxm.clone()
             );
-            None
+            Ok(false)
         } else {
             util::upd(&code, &word, c4btmap);
             println!(
@@ -65,10 +68,17 @@ pub fn upd2(code: String
                 code,
                 c4btmap.get(&code).unwrap().clone()
             );
-            Some(Box::new(c4btmap.clone()))
+            Ok(true)
         }
-    }else{
-        None
+    } else {
+        // Code not found - insert new entry
+        util::upd(&code, &word, c4btmap);
+        println!(
+            "inserted new code: {} -> {:?}",
+            code,
+            c4btmap.get(&code).unwrap().clone()
+        );
+        Ok(true)
     }
 }
 

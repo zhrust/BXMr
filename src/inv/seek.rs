@@ -5,6 +5,7 @@ use std::collections::BTreeMap;
 
 use crate::inv::_util as util;
 
+/*
 pub async fn echo(code: String) {
     //println!("src/inv/seek: {}", env!("CARGO_PKG_VERSION"));
 
@@ -35,6 +36,7 @@ pub async fn echo(code: String) {
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
 }
+*/
 
 
 pub fn echo2(code: String, bt4bxm:&mut BTreeMap<String, Vec<String>>) {

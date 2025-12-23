@@ -15,6 +15,7 @@ fn main()  -> Result<()> {
     // `()` can be used when no completer is required
     let mut rl = DefaultEditor::new()?;
     let mut hl: Vec<String> = Vec::new();
+    let mut dirty = false;  // Track if data was modified
 
 
 if let Some(btree) = inv::renew::load2btree() {
@@ -30,13 +31,15 @@ if let Some(btree) = inv::renew::load2btree() {
                 //rl.add_history_entry(line.as_str())?;
                 //println!("Line: {}", line.clone());
                 hl.push(line.clone());
-            let mut cmds: Vec<String> = line
+            let cmds: Vec<String> = line
                             .clone()
                             .split_whitespace()
                             .map(|s| s.to_string())
                             .collect();
             //println!("{:?}", cmds);
-            inv::fix(cmds, &mut bt4bxm);
+            if inv::fix(cmds, &mut bt4bxm) {
+                dirty = true;
+            }
             },
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
@@ -51,6 +54,13 @@ if let Some(btree) = inv::renew::load2btree() {
                 break
             }
         }
+    }
+
+    // Auto-save on exit if data was modified
+    if dirty {
+        println!("\n[AUTO-SAVE] Data was modified, saving...");
+        inv::gen::exp2(&mut bt4bxm);
+        println!("[AUTO-SAVE] Saved successfully!");
     }
 
 }//inv::renew::load2btree()

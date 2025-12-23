@@ -25,8 +25,10 @@ pub mod dele;
 pub mod ahead;
 
 
-pub fn fix(words:Vec<String>, bt4bxm:&mut BTreeMap<String, Vec<String>>) {
-    //println!("{:?}", words);
+/// Executes commands and returns true if data was modified (for auto-save)
+pub fn fix(words:Vec<String>, bt4bxm:&mut BTreeMap<String, Vec<String>>) -> bool {
+    let mut modified = false;
+    
     match words.len() {
         1 => {
             match words[0].as_str() {
@@ -78,43 +80,34 @@ pub fn fix(words:Vec<String>, bt4bxm:&mut BTreeMap<String, Vec<String>>) {
             match words[0].as_str() {
                 "cfg" => {
                     println!("Command: cfg");
-                    //println!("Code value: {}", words[1]);
-                    //println!("Text: {}", words[2]);
                     cfg::set(words[1].clone(), words[2].clone());
                 },
                 "upd" => {
-                    //bt4bxm = upd::upd2(words[1].clone()
-                    //    , words[2].clone()
-                    //    , &mut bt4bxm);
-
-if let Some(bt4bxm) = upd::upd2(words[1].clone()
-                        , words[2].clone()
-                        , bt4bxm) {
-    let bt4bxm = *bt4bxm;
-    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
-    }
+                    match upd::upd2(words[1].clone(), words[2].clone(), bt4bxm) {
+                        Ok(changed) => {
+                            if changed { modified = true; }
+                        },
+                        Err(e) => println!("Error: {}", e),
+                    }
                     println!("{}", _util::H_MORE);
                 },
                 "dele" => {
-if let Some(bt4bxm) = dele::kill2(words[1].clone()
-                        , words[2].clone()
-                        , bt4bxm) {
-    let bt4bxm = *bt4bxm;
-    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
-    }
-
+                    match dele::kill2(words[1].clone(), words[2].clone(), bt4bxm) {
+                        Ok(changed) => {
+                            if changed { modified = true; }
+                        },
+                        Err(e) => println!("Error: {}", e),
+                    }
                     println!("{}", _util::H_MORE);
-
                 },
                 "ahead" => {
-
-if let Some(bt4bxm) = ahead::up1st2(words[1].clone()
-                        , words[2].clone()
-                        , bt4bxm) {
-    let bt4bxm = *bt4bxm;
-    // 在这里使用 bt，它是一个 BTreeMap<String, Vec<String>> 类型的对象
-    }
-
+                    match ahead::up1st2(words[1].clone(), words[2].clone(), bt4bxm) {
+                        Ok(changed) => {
+                            if changed { modified = true; }
+                        },
+                        Err(e) => println!("Error: {}", e),
+                    }
+                    println!("{}", _util::H_MORE);
                 },
                 _ => {
                     // 其它情况
@@ -129,6 +122,7 @@ if let Some(bt4bxm) = ahead::up1st2(words[1].clone()
             println!("{}", _util::H_HELP);
         }
     }//match cmds.len()
-
+    
+    modified
 }
 

@@ -2,6 +2,7 @@ use std::collections::BTreeMap;
 
 use crate::inv::_util as util;
 
+/*
 pub async fn kill(code: String, word: String) {
 // check .env is OK?
     match util::chk_denv(util::ENV_TOML) {
@@ -16,7 +17,7 @@ pub async fn kill(code: String, word: String) {
                         println!("empty words, can not DELET\n\t:{} -> {}"
                             , code, word);
                     }else{
-                        println!("already:\n\t{}->{:?}", code, word5bxm.clone());
+                        println!("already:\n\t{}->}:?}", code, word5bxm.clone());
                         let _droped = word5bxm.retain(|x| x != &word);
                         util::replace_value(&mut c4btmap
                             , &code
@@ -39,38 +40,39 @@ pub async fn kill(code: String, word: String) {
         util::EnvResult::Failure(e) => println!("failed: {}", e),
     }
 }
+*/
 
 
+/// Deletes word from code entry in BXM code table
+/// Returns Ok(true) if data was modified, Ok(false) if no change or empty
 pub fn kill2(code: String
         , word: String
         , c4btmap: &mut BTreeMap<String, Vec<String>>
-    )-> Option<Box<BTreeMap<String, Vec<String>>>> {
+    ) -> anyhow::Result<bool> {
 
-    if let Some(word5bxm) = c4btmap.clone().get_mut(&code) {
-        // println!("hold: {}", word5bxm.len());
-        if word5bxm.len() == 0{
+    if let Some(word5bxm) = c4btmap.get_mut(&code) {
+        if word5bxm.is_empty() {
             println!("empty words, can not DELET\n\t:{} -> {}"
                 , code, word);
-            None
-
-        }else{
+            Ok(false)
+        } else {
             println!("already:\n\t{}->{:?}", code, word5bxm.clone());
-            let _droped = word5bxm.retain(|x| x != &word);
-
-            util::replace_value(c4btmap
-                , &code
-                , word5bxm.to_vec()
-            );
-            println!("killed:\n\t{}->{:?}"
-                , code
-                , c4btmap.get_mut(&code)
-            );
-            //util::upd(&code, &word, c4btmap);
-            Some(Box::new(c4btmap.clone()))
+            let original_len = word5bxm.len();
+            word5bxm.retain(|x| x != &word);
+            
+            if word5bxm.len() < original_len {
+                println!("killed:\n\t{}->{:?}"
+                    , code
+                    , word5bxm
+                );
+                Ok(true)
+            } else {
+                println!("word '{}' not found in code '{}'", word, code);
+                Ok(false)
+            }
         }
-
-    }else{
-        None
+    } else {
+        anyhow::bail!("LOST code -> {}", code)
     }
 }
 

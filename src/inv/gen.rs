@@ -7,6 +7,7 @@ use std::io::BufWriter;
 use crate::inv::_util as util;
 
 //fn main() -> std::io::Result<()> {
+/*
 pub async fn exp() {
     //println!("src/inv/gen: {}", env!("CARGO_PKG_VERSION"));
     //log::debug!("src/inv/gen: as {}", env!("CARGO_PKG_VERSION"));
@@ -93,6 +94,7 @@ such as:
 
 //    Ok(())
 }
+*/
 
 
 
