@@ -17,6 +17,7 @@ pub mod find;
 pub mod upd;
 pub mod dele;
 pub mod ahead;
+pub mod atail;
 
 
 /// Executes commands and returns true if data was modified (for auto-save)
@@ -198,6 +199,34 @@ pub fn fix(words: Vec<String>, bt4bxm: &mut BTreeMap<String, Vec<String>>) -> bo
             }
         },
         
+        // atail 命令: atail <code> <word>
+        "atail" => {
+            match words.len() {
+                1 => {
+                    eprintln!("Error: atail 命令需要编码和词条参数");
+                    eprintln!("  示例: atail aaa 叒");
+                    eprintln!("  功能: 将词条移到编码列表末尾");
+                },
+                2 => {
+                    eprintln!("Error: atail 命令缺少词条参数");
+                    eprintln!("  示例: atail {} 词条", words[1]);
+                },
+                3 => {
+                    match atail::down_last2(words[1].clone(), words[2].clone(), bt4bxm) {
+                        Ok(changed) => {
+                            if changed { modified = true; }
+                        },
+                        Err(e) => eprintln!("Error: {}", e),
+                    }
+                    println!("{}", _util::H_MORE);
+                },
+                _ => {
+                    eprintln!("Error: atail 命令参数过多");
+                    eprintln!("  示例: atail aaa 叒");
+                }
+            }
+        },
+        
         // 未知命令 / Unknown command
         _ => {
             eprintln!("Unknown command: {}", words[0]);
@@ -289,5 +318,26 @@ mod tests {
         let mut bt = create_test_btmap();
         let result = fix(vec!["unknown_cmd".to_string()], &mut bt);
         assert!(!result, "Unknown command should return false");
+    }
+
+    #[test]
+    fn test_atail_without_args_returns_false() {
+        let mut bt = create_test_btmap();
+        assert!(!fix(vec!["atail".to_string()], &mut bt));
+        assert!(!fix(vec!["atail".to_string(), "aaa".to_string()], &mut bt));
+    }
+
+    #[test]
+    fn test_atail_moves_word_to_end() {
+        let mut bt = create_test_btmap();
+        // bt has: "aaa" -> ["测试", "叒"]
+        let result = fix(
+            vec!["atail".to_string(), "aaa".to_string(), "测试".to_string()],
+            &mut bt
+        );
+        assert!(result, "atail should return true when word moved");
+        // After atail, "测试" should be at end: ["叒", "测试"]
+        let words = bt.get("aaa").unwrap();
+        assert_eq!(words.last().unwrap(), "测试");
     }
 }
