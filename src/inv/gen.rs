@@ -34,6 +34,13 @@ pub fn exp2(c4btmap: &mut BTreeMap<String, Vec<String>>){
                 writeln!(writer, "{}\t{}", value, key).expect("Failed to write to file");
             }
             writer.flush().expect("Failed to flush buffer");
+            
+            // Auto-update index
+            // 自动更新反查索引
+            println!("Syncing index...");
+            if let Err(e) = crate::inv::idx::build_and_save(c4btmap) {
+                eprintln!("Warning: Failed to update index: {}", e);
+            }
 
         },
         util::EnvResult::Failure(e) => {

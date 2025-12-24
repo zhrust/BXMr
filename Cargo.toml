@@ -1,6 +1,6 @@
 [package]
 name = "bxmr"
-version = "25.1224.3"
+version = "25.1224.11"
 edition = "2021"
 
 authors = ["Zoom.Quiet <zoomquiet+rs@gmail.com>"]
@@ -35,6 +35,7 @@ indicatif = "0.17.3"
 anyhow = "1.0"
 
 rustyline = "11.0.0"
+inquire = "0.9.1"
 #csv = "1.2.0"
 #clap = "4.1.6"
 #clap-verbosity-flag = "2.0.0"

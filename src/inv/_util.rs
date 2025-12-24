@@ -36,6 +36,10 @@ pub const ENV_TOML: &str = "BXMR_TEMP_TOML";
 /// BXM code character set / 表形码字符集
 pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
 
+/// Environment variable name for CSV index path
+/// 环境变量名：CSV 索引文件路径
+pub const ENV_IDX_CSV: &str = "BXMR_IDX_CSV";
+
 #[allow(dead_code)]
 /// Maximum BXM code length / 表形码最大长度
 pub const MBCL: usize = 4;
@@ -65,6 +69,9 @@ find   base word FIND code is exist?
 upd    aaa 叒 <~ base code word UPGRADE the define in BXM
 dele   aaa 叒 ~> base code word DELET the define from BXM
 ahead  aaa 叒 => base code word UP the word define 1st in BXM
+atail  aaa 叒 => base code word DOWN the word define Last in BXM
+idx    re-build char index from current BXM table (to .csv)
+apd    (Interative) append new word with auto-generated code
 
 -----------------------------------------
 BXMr Usage:

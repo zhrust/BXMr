@@ -18,6 +18,8 @@ pub mod upd;
 pub mod dele;
 pub mod ahead;
 pub mod atail;
+pub mod idx;
+pub mod apd;
 
 
 /// Executes commands and returns true if data was modified (for auto-save)
@@ -225,6 +227,24 @@ pub fn fix(words: Vec<String>, bt4bxm: &mut BTreeMap<String, Vec<String>>) -> bo
                     eprintln!("  示例: atail aaa 叒");
                 }
             }
+        },
+        
+        // idx 命令: 手动重建索引
+        "idx" => {
+            if let Err(e) = idx::build_and_save(bt4bxm) {
+                eprintln!("Error building index: {}", e);
+            }
+        },
+
+        // apd 命令: 交互式追加
+        "apd" => {
+            match apd::enter_loop(bt4bxm) {
+                Ok(changed) => {
+                    if changed { modified = true; }
+                },
+                Err(e) => eprintln!("Error in apd mode: {}", e),
+            }
+            println!("{}", _util::H_MORE);
         },
         
         // 未知命令 / Unknown command
