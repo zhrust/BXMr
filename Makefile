@@ -1,71 +1,139 @@
 # BXMr Makefile
 # rIME-Squirrel BXM code table management tool
 # 表形码管理工具
+#
+# Usage: make [target]
+# Run 'make' or 'make help' to see available commands
 
-.PHONY: all build release clean test doc clippy check fmt run help
+.PHONY: all help build release run clean test doc doc-open clippy check fmt fmt-check install
 
-# Default target
-all: build
+# Default: show help
+all: help
 
-# Development build
+#============================================================================
+#  📖 HELP / 帮助
+#============================================================================
+
+help:
+	@echo ""
+	@echo "╔════════════════════════════════════════════════════════════════╗"
+	@echo "║               BXMr - 表形码管理工具 Makefile                    ║"
+	@echo "╚════════════════════════════════════════════════════════════════╝"
+	@echo ""
+	@echo "┌────────────────────────────────────────────────────────────────┐"
+	@echo "│ 🚀 开发 / Development                                          │"
+	@echo "├────────────────────────────────────────────────────────────────┤"
+	@echo "│  make build     开发构建 (debug mode)                          │"
+	@echo "│  make run       运行应用                                       │"
+	@echo "│  make fmt       格式化代码 (rustfmt)                           │"
+	@echo "│  make clippy    运行 Clippy 静态分析                           │"
+	@echo "│  make check     完整检查 (fmt + clippy + build)                │"
+	@echo "└────────────────────────────────────────────────────────────────┘"
+	@echo ""
+	@echo "┌────────────────────────────────────────────────────────────────┐"
+	@echo "│ 🧪 测试 / Testing                                              │"
+	@echo "├────────────────────────────────────────────────────────────────┤"
+	@echo "│  make test      运行单元测试                                   │"
+	@echo "│  make fmt-check 检查代码格式 (CI 用)                           │"
+	@echo "└────────────────────────────────────────────────────────────────┘"
+	@echo ""
+	@echo "┌────────────────────────────────────────────────────────────────┐"
+	@echo "│ 📦 发布 / Release                                              │"
+	@echo "├────────────────────────────────────────────────────────────────┤"
+	@echo "│  make release   发布构建 (optimized)                           │"
+	@echo "│  make install   安装到 ~/.cargo/bin                            │"
+	@echo "└────────────────────────────────────────────────────────────────┘"
+	@echo ""
+	@echo "┌────────────────────────────────────────────────────────────────┐"
+	@echo "│ 📚 文档 / Documentation                                        │"
+	@echo "├────────────────────────────────────────────────────────────────┤"
+	@echo "│  make doc       生成 Rustdoc 文档                              │"
+	@echo "│  make doc-open  生成并打开文档                                 │"
+	@echo "└────────────────────────────────────────────────────────────────┘"
+	@echo ""
+	@echo "┌────────────────────────────────────────────────────────────────┐"
+	@echo "│ 🧹 维护 / Maintenance                                          │"
+	@echo "├────────────────────────────────────────────────────────────────┤"
+	@echo "│  make clean     清理构建产物                                   │"
+	@echo "└────────────────────────────────────────────────────────────────┘"
+	@echo ""
+
+#============================================================================
+#  🚀 开发 / Development
+#============================================================================
+
+# Development build (debug mode)
 build:
+	@echo "🔨 Building (debug)..."
 	cargo build
-
-# Release build with optimizations
-release:
-	cargo build --release
 
 # Run the application
 run:
+	@echo "🚀 Running BXMr..."
 	cargo run
-
-# Run clippy linter with warnings as errors
-clippy:
-	cargo clippy -- -D warnings
-
-# Run all checks (clippy, fmt, build)
-check: fmt clippy build
-	@echo "All checks passed!"
 
 # Format code with rustfmt
 fmt:
+	@echo "✨ Formatting code..."
 	cargo fmt
+
+# Run clippy linter with warnings as errors
+clippy:
+	@echo "🔍 Running Clippy..."
+	cargo clippy -- -D warnings
+
+# Run all checks (fmt, clippy, build)
+check: fmt clippy build
+	@echo "✅ All checks passed!"
+
+#============================================================================
+#  🧪 测试 / Testing
+#============================================================================
+
+# Run tests
+test:
+	@echo "🧪 Running tests..."
+	cargo test
 
 # Format check (for CI)
 fmt-check:
+	@echo "📋 Checking format..."
 	cargo fmt --check
 
-# Generate documentation
-doc:
-	cargo doc --no-deps --open
+#============================================================================
+#  📦 发布 / Release
+#============================================================================
 
-# Generate documentation without opening browser
-doc-build:
-	cargo doc --no-deps
-
-# Clean build artifacts
-clean:
-	cargo clean
-
-# Run tests (when available)
-test:
-	cargo test
+# Release build with optimizations
+release:
+	@echo "📦 Building release..."
+	cargo build --release
+	@echo "✅ Release binary: target/release/bxmr"
 
 # Install to ~/.cargo/bin
 install:
+	@echo "📥 Installing to ~/.cargo/bin..."
 	cargo install --path .
 
-# Show help
-help:
-	@echo "BXMr Makefile Commands:"
-	@echo "  make build    - Development build"
-	@echo "  make release  - Release build with optimizations"
-	@echo "  make run      - Run the application"
-	@echo "  make clippy   - Run clippy linter"
-	@echo "  make check    - Run all checks (fmt, clippy, build)"
-	@echo "  make fmt      - Format code with rustfmt"
-	@echo "  make doc      - Generate and open documentation"
-	@echo "  make clean    - Clean build artifacts"
-	@echo "  make test     - Run tests"
-	@echo "  make install  - Install to ~/.cargo/bin"
-	@echo "  make help     - Show this help"
+#============================================================================
+#  📚 文档 / Documentation
+#============================================================================
+
+# Generate documentation
+doc:
+	@echo "📚 Generating documentation..."
+	cargo doc --no-deps
+
+# Generate and open documentation
+doc-open:
+	@echo "📚 Generating and opening documentation..."
+	cargo doc --no-deps --open
+
+#============================================================================
+#  🧹 维护 / Maintenance
+#============================================================================
+
+# Clean build artifacts
+clean:
+	@echo "🧹 Cleaning..."
+	cargo clean
