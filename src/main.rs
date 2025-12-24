@@ -1,15 +1,12 @@
-#![allow(unused)]
-// main.rs
+//! BXMr - CLI tool for managing BXM code table with rIME-Squirrel
+//! BXMr - rIME-Squirrel 表形码管理工具
+
 use rustyline::error::ReadlineError;
 use rustyline::{DefaultEditor, Result};
 
-//use std::ffi::OsString;
-//use clap::Parser;
-
 mod inv;
 
-///#[tokio::main]
-//async fn main()  -> Result<()> {
+
 fn main()  -> Result<()> {
 
     // `()` can be used when no completer is required

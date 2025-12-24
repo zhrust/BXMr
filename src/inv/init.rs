@@ -1,18 +1,15 @@
-//use std::ffi::OsStr;
-//use crate::inv::OsString;
-//use crate::git::OsStr;
-//use std::collections::HashMap;
-//use std::collections::BTreeMap;
-//use std::collections::HashSet;
+//! Initialization module for BXMr
+//! BXMr 初始化模块
+
+#![allow(dead_code)]
 
 use toml::Value;
 use std::fs::File;
 use std::io::Write;
-//use std::collections::HashMap;
 use crate::inv::_util as util;
 
-//pub fn init(toml: String) {
 pub fn init() {
+
 
     match util::chk_denv(util::ENV_TOML) {
         util::EnvResult::Success(dkey, dval) => {

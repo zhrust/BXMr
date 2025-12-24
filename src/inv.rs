@@ -1,20 +1,14 @@
-#![allow(unused)]
-//use std::ffi::OsStr;
-use std::collections::BTreeMap;
-use std::ffi::OsString;
-//use std::path::PathBuf;
+//! Command dispatcher module for BXMr
+//! BXMr 命令分发模块
 
-use clap::Parser;
-//use clap::{AppSettings, Parser, Subcommand};
+use std::collections::BTreeMap;
 
 pub mod _util;
 pub mod cfg;
 pub mod env;
 pub mod ver;
 
-//pub mod usage;
 pub mod init;
-//pub mod echo;
 pub mod renew;
 pub mod gen;
 

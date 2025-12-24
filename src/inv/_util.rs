@@ -1,9 +1,14 @@
-#![allow(unused)]
+//! Utility functions for BXMr
+//! BXMr 工具函数模块
+//! 
+//! This module contains utility functions, some reserved for future use.
+//! 此模块包含工具函数，部分保留供将来使用。
+
+#![allow(dead_code)]
+
 use std::env;
 use std::fs;
 use std::fs::File;
-use std::fs::OpenOptions;
-//use std::io::prelude::*;
 use std::io::{self, Write};
 use std::io::Read;
 use std::io::BufReader;
@@ -14,32 +19,26 @@ use std::path::Path;
 
 use std::collections::BTreeMap;
 
-//use toml::de::{Deserializer, MapAccess, SeqAccess};
-//use toml::de::{Deserializer, value::MapDeserializer, value::SeqDeserializer};
-//use toml::Value;
-use toml::value::{Value, Table};
-//use toml::de::{Deserializer, MapAccess, SeqAccess, value::TableDeserializer, value::ArrayDeserializer};
+use toml::value::Value;
 
-use serde::{Serialize, Deserialize};
-//use envy::Error;
 use itertools::Itertools;
-use dotenv::dotenv;
 use indicatif::ProgressBar;
 
-//use tokio::io::{self, AsyncBufReadExt};
-//use tokio::fs::File as async_File;
-//use tokio::io::{self as async_io, AsyncBufReadExt};
-//use tokio::io::{AsyncBufReadExt, BufReader};
-//use tokio::io::AsyncBufReadExt;
-//use tokio::io::BufReader as TokioBufReader;
-//use tokio::fs::File;
-//use tokio::fs::File as TokioFile;
-
+/// Environment variable name for YAML path
+/// 环境变量名：YAML 路径
 pub const ENV_YAML: &str = "BXMR_AIM_YAML";
+
+#[allow(dead_code)]
+/// Environment variable name for TOML path (reserved for future use)
+/// 环境变量名：TOML 路径（保留供将来使用）
 pub const ENV_TOML: &str = "BXMR_TEMP_TOML";
 
+/// BXM code character set / 表形码字符集
 pub const BXMC: &str = "abcdefghijklmnopqrstuvwxyz";
-pub const MBCL: usize = 4; // code len.
+
+#[allow(dead_code)]
+/// Maximum BXM code length / 表形码最大长度
+pub const MBCL: usize = 4;
 
 pub const RIME_HEAD: &str = r#"
 # Rime dictionary
@@ -125,6 +124,7 @@ cfg yaml /Users/zoomq/Library/Rime/bxm4zq2mac.dict.yaml
 all BXMr command, call ?|h|help
     "#;
 
+#[allow(dead_code)]
 pub const H_ENV: &str = r#"
 -----------------------------------------
 usage as:
@@ -134,6 +134,7 @@ BXMr> env
 all BXMr command, call ?|h|help
     "#;
 
+#[allow(dead_code)]
 pub const H_SEEK: &str = r#"
 -----------------------------------------
 usage as:
@@ -143,6 +144,7 @@ BXMr> seek aaa
 all BXMr command, call ?|h|help
     "#;
 
+#[allow(dead_code)]
 pub const H_FIND: &str = r#"
 -----------------------------------------
 usage as:
@@ -152,6 +154,7 @@ BXMr> find 叒
 all BXMr command, call ?|h|help
     "#;
 
+#[allow(dead_code)]
 pub const H_UPD: &str = r#"
 -----------------------------------------
 usage as:
@@ -161,6 +164,7 @@ BXMr> upd aaa 叒
 all BXMr command, call ?|h|help
     "#;
 
+#[allow(dead_code)]
 pub const H_DELE: &str = r#"
 -----------------------------------------
 usage as:
@@ -170,6 +174,7 @@ BXMr> dele aaa 叒
 all BXMr command, call ?|h|help
     "#;
 
+#[allow(dead_code)]
 pub const H_AHEAD: &str = r#"
 -----------------------------------------
 usage as:
@@ -178,85 +183,6 @@ BXMr> ahead aaa 叒
 
 all BXMr command, call ?|h|help
     "#;
-
-/*
-use std::path::Path;
-
-let my_path_str = "/path/to/my/file.txt";
-let my_path = Path::new(my_path_str);
-*/
-/*
-pub async fn async_read_lines<P>(path: P) -> Result<Vec<String>, io::Error>
-where
-    P: AsRef<std::path::Path>,
-{
-    let file = TokioFile::open(path).await?;
-    let reader = TokioBufReader::new(file);
-    let mut lines = vec![];
-    let mut line = String::new();
-    tokio::pin!(reader);
-    loop {
-        match reader.read_line(&mut line).await {
-            Ok(0) => {
-                break;
-            }
-            Ok(_) => {
-                lines.push(line.trim().to_string());
-                line.clear();
-            }
-            Err(e) => return Err(e),
-        }
-    }
-    Ok(lines)
-}
-*/
-
-/* 
-pub async fn speed_openf(tfile:String)-> io::Result<()> {
-    let file = TokioFile::open(tfile).await?;
-    let mut reader = TokioBufReader::new(file);
-    while let Some(line) = reader.lines().next_line().await? {
-        println!("{}", line);
-    }
-    Ok(())
-}
- */
-
-/*
-pub async fn async_toml2btmap(tfile: String) -> Option<BTreeMap<String, Vec<String>>> {
-    println!("opening {}...", tfile);
-
-    let path = Path::new(&tfile);
-    let contents = async_read_lines(path).await.ok()?;
-
-    let joined_contents = contents.join("\n");
-    let data: toml::Value = toml::from_str(joined_contents.as_str()).ok()?;
-    let line_count = joined_contents.lines().count();
-
-    //let data: toml::Value = toml::from_str(&contents).ok()?;
-    //let line_count = contents.lines().count();
-
-    println!("reading : {} lines", line_count);
-    let pb = ProgressBar::new(line_count as u64);
-
-    let mut map = BTreeMap::new();
-
-    for (key, value) in data.as_table()? {
-        pb.inc(1);
-        if let Some(array) = value.as_array() {
-            let mut vec = Vec::new();
-            for v in array {
-                if let Some(s) = v.as_str() {
-                    vec.push(String::from(s));
-                }
-            }
-            map.insert(key.clone(), vec.clone());
-        }
-    }
-
-    Some(map)
-}
-*/
 
 
 pub fn toml2btmap(tfile:String) -> Option<BTreeMap<String, Vec<String>>> {
@@ -465,9 +391,9 @@ pub fn print_gbxm_sorted(gbxm: &BTreeMap<String, Vec<String>>) {
     for key in sorted_keys {
         let values = gbxm.get(key).unwrap();
         //println!("{} -> {:?}", key, values);
-        writeln!(handle, 
+        let _ = writeln!(handle, 
             "{} -> {:?}", key, values
-        ); // add `?` if you care about errors here
+        );
     }
 
 }
@@ -517,16 +443,14 @@ pub fn upd_denv(key: &str, val: &str) {
 
             let file = File::open(path_str);
             let reader = BufReader::new(file.unwrap());
-            for line in reader.lines() {
-                if let Ok(l) = line {
-                    if l.starts_with(&format!("{}=", key)) {
-                        found_key = true;
-                        new_lines.push_str(&format!("{}={} ", key, val));
-                        println!("\n\t Updated .env item: {}={} ", key, val);
-                    } else {
-                        new_lines.push_str(&l);
-                        new_lines.push('\n');
-                    }
+            for l in reader.lines().map_while(Result::ok) {
+                if l.starts_with(&format!("{}=", key)) {
+                    found_key = true;
+                    new_lines.push_str(&format!("{}={} ", key, val));
+                    println!("\n\t Updated .env item: {}={} ", key, val);
+                } else {
+                    new_lines.push_str(&l);
+                    new_lines.push('\n');
                 }
             }
 
@@ -554,7 +478,7 @@ pub fn upd_denv(key: &str, val: &str) {
 pub fn reload_denv(f2denv:&str){
     // 加载 .env 文件中的配置项
     //dotenv().ok();
-    dotenv::from_path(&f2denv).ok();
+    dotenv::from_path(f2denv).ok();
     // 遍历当前进程中的所有环境变量，打印每个键值对
     //for (key, value) in std::env::vars() {
     //    println!("{}={}", key, value);
@@ -569,10 +493,10 @@ pub enum EnvResult {
 
 pub fn chk_denv(key: &str)-> EnvResult {
     match ok_denv() {
-        Ok(f2denv) => {
+        Ok(_f2denv) => {
             let f2denv = ok_denv().unwrap().to_str().unwrap();
             println!("load .env <-{} ", f2denv);
-            dotenv::from_path(&f2denv).ok();
+            dotenv::from_path(f2denv).ok();
             //let val = std::env::var(key);
 
             match std::env::var(key) {
@@ -606,7 +530,7 @@ pub fn rmitem_denv(key: &str) {
             match file {
                 Ok(f) => {
                     let reader = BufReader::new(f);
-                    let lines: Vec<String> = reader.lines().filter_map(|line| line.ok()).collect();
+                    let lines: Vec<String> = reader.lines().map_while(Result::ok).collect();
 
                     let new_lines = lines
                             .iter()

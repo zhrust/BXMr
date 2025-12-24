@@ -1,5 +1,9 @@
+//! Word search module - find code by word
+//! 词条搜索模块 - 通过词条查找编码
+
+#![allow(dead_code)]
+
 use std::collections::BTreeMap;
-//use toml::Value;
 use indicatif::ProgressBar;
 
 use crate::inv::_util as util;

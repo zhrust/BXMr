@@ -1,20 +1,11 @@
-//#![allow(unused)]
-//use std::error::Error;
-//use std::fs;
-//use std::fs::File;
-//use std::io::{self, Write};
-//use std::io::Write;
-//use std::io::BufReader;
-//use std::io::BufRead;
-//use std::io::{BufRead, BufReader};
-//use std::path::Path;
-use std::thread;
-use std::time::Duration;
+//! Data reload and synchronization module
+//! 数据重载与同步模块
+
+#![allow(dead_code)]
+
 use std::collections::BTreeMap;
 
-//use toml::Value;
 use indicatif::ProgressBar;
-//use indicatif::ProgressStyle;
 
 use crate::inv::_util as util;
 
@@ -33,7 +24,7 @@ pub fn flusht(ycodes:Vec<(String, String)>) {
             //let code4btmap = util::toml2btmap(_toml);
             match util::toml2btmap(_toml.clone()) {
                 Some(mut code4btmap) => {
-                    for (i, (k, v)) in ycodes.iter().enumerate() {
+                    for (k, v) in ycodes.iter() {
                         util::upd(k, v, &mut code4btmap);
                         //pb.set_position((i + 1) as u64);
                         pb.inc(1);
@@ -87,6 +78,7 @@ pub fn load2btree() -> Option<&'static mut BTreeMap<String, Vec<String>>> {
 } */
 
 
+#[allow(clippy::box_collection)]
 pub fn load2btree() -> Option<Box<BTreeMap<String, Vec<String>>>> {
     match util::chk_denv(util::ENV_YAML) {
         util::EnvResult::Success(_ekey, _yaml) => {
@@ -138,7 +130,7 @@ pub fn flush4bxm(ycodes:Vec<(String, String)>,
 
     println!("\t load rIME usage data=> {} lines, merge inro BXM code.\n",ylen);
     //let mut code4btmap;
-    for (i, (k, v)) in ycodes.iter().enumerate() {
+    for (k, v) in ycodes.iter() {
         //util::upd(k, v, code4btmap);
         //thread::sleep(Duration::from_millis(4));
 
