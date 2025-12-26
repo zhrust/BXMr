@@ -2,8 +2,6 @@
 > BXM manager ~ a CLI tool for servicing code table of BXM under rIME-Squirrel
 > 叕一个 CLI 工具为 rIME-Squirrel 维护 BXM 输入法码表而创立
 
-![bxmr_v0.23.312_usage](https://ipic.zoomquiet.top/2023-03-12-bxmr_v0.23.312_usage.gif)
-
 ------
 ## Command-line options
 
@@ -20,6 +18,10 @@ find   base word FIND code is exist?
 upd    aaa 叒 <~ base code word UPGRADE the define in BXM
 dele   aaa 叒 ~> base code word DELET the define from BXM
 ahead  aaa 叒 => base code word UP the word define 1st in BXM
+
+atail  aaa 叒 => base code word DOWN the word define Last in BXM
+idx    re-build char index from current BXM table (to .csv)
+apd    (Interative) append new word with auto-generated code
 
 -----------------------------------------
 BXMr Usage:
@@ -91,6 +93,7 @@ For more information,
 
 ## logging
 
+- 251224 ZQ vibe coding appended idx,apd...
 - ...
 - 230312 ZQ canceled .toml, base memory speed daily updatting...
 - 230306 ZQ ++ahead ~ adjust word suggest order
@@ -136,10 +139,10 @@ as crate, can:
 
 
 ```
-          _~`~~~_
-      \/ /  - <  \ ()
-        '_   ▽   _'
-        / '--#--' \
+       _~~-∽~_
+   () /  → #  \ (/
+     '_   ∧   _'
+     \ '--.--' \
 
 ...act by ferris-actor v0.2.4 (built on 23.0303.201916)
 ```
